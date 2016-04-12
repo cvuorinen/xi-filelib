@@ -359,7 +359,7 @@ class DoctrineDbalPlatform implements Platform
         );
         $rows = new ArrayIterator($rows);
 
-        return $this->$resources['exporter']($rows);
+        return $this->{$resources['exporter']}($rows);
     }
 
     /**

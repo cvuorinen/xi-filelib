@@ -402,7 +402,7 @@ class DoctrineOrmPlatform implements Platform
         }
 
         $resources = $this->classNameToResources[$className];
-        $repo = $this->em->getRepository($this->$resources['getEntityName']());
+        $repo = $this->em->getRepository($this->{$resources['getEntityName']}());
         $rows = $repo->findBy(
             array(
                 'id' => $ids
@@ -410,7 +410,7 @@ class DoctrineOrmPlatform implements Platform
         );
 
         $rows = new ArrayIterator($rows);
-        return $this->$resources['exporter']($rows);
+        return $this->{$resources['exporter']}($rows);
     }
 
     /**
