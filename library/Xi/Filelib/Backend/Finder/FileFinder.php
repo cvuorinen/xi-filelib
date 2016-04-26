@@ -16,6 +16,7 @@ class FileFinder extends AbstractFinder
 {
     protected $fields = array(
         'id',
+        'uuid',
         'folder_id',
         'name',
     );

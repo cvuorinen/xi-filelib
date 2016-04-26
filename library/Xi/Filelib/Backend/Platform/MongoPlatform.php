@@ -47,6 +47,7 @@ class MongoPlatform implements Platform
         ),
         'Xi\Filelib\File\File' => array(
             'id' => '_id',
+            'uuid' => 'uuid',
             'folder_id' => 'folder_id',
             'name' => 'name',
         ),

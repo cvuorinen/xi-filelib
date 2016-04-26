@@ -38,6 +38,7 @@ class DoctrineDbalPlatform implements Platform
         ),
         'Xi\Filelib\File\File' => array(
             'id' => 'id',
+            'uuid' => 'uuid',
             'folder_id' => 'folder_id',
             'name' => 'filename',
         ),
