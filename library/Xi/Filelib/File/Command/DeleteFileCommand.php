@@ -9,6 +9,7 @@
 
 namespace Xi\Filelib\File\Command;
 
+use Xi\Filelib\Backend\ResourceReferencedException;
 use Xi\Filelib\File\FileOperator;
 use Xi\Filelib\File\File;
 use Xi\Filelib\Event\FileEvent;
@@ -35,10 +36,11 @@ class DeleteFileCommand extends AbstractFileCommand
 
         $this->backend->deleteFile($this->file);
 
-        if ($this->file->getResource()->isExclusive()) {
-            $this->storage->delete($this->file->getResource());
+        try {
             $this->backend->deleteResource($this->file->getResource());
-        }
+            $this->storage->delete($this->file->getResource());
+        } catch (ResourceReferencedException $e)
+        {}
 
         $event = new FileEvent($this->file);
         $this->eventDispatcher->dispatch(Events::FILE_AFTER_DELETE, $event);
