@@ -61,7 +61,7 @@ class IdentifiableDataContainerTest extends TestCase
      */
     public function invalidKeyThrowsUp()
     {
-        $this->setExpectedException('Xi\Filelib\InvalidArgumentException');
+        $this->expectException('Xi\Filelib\InvalidArgumentException');
         $data = new IdentifiableDataContainer();
         $data->set('tenhusen suuruus on käsittämätön', 'potenssiin kolme!');
     }

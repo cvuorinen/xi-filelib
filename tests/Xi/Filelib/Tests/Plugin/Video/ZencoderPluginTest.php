@@ -396,7 +396,7 @@ class ZencoderPluginTest extends \Xi\Filelib\Tests\TestCase
             ->with($this->isInstanceOf('Xi\Filelib\Resource\Resource'))
             ->will($this->returnValue(ROOT_TESTS . '/data/hauska-joonas.mp4'));
 
-        $this->setExpectedException(
+        $this->expectException(
             'Xi\Filelib\FilelibException',
             'Zencoder service responded with errors: Url of input file is invalid. lus',
             500
@@ -485,7 +485,7 @@ class ZencoderPluginTest extends \Xi\Filelib\Tests\TestCase
     public function checksVersionValidity($version, $expected)
     {
         if (!$expected) {
-            $this->setExpectedException('Xi\Filelib\InvalidVersionException');
+            $this->expectException('Xi\Filelib\InvalidVersionException');
         }
 
         $plugin = $this->plugin;

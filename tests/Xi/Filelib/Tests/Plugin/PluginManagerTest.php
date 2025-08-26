@@ -107,7 +107,7 @@ class PluginManagerTest extends \Xi\Filelib\Tests\TestCase
 
         $this->manager->addPlugin($plugin, array(), 'tenhusen-suuruuden-ylistyksen-plugin');
 
-        $this->setExpectedException('Xi\Filelib\InvalidArgumentException');
+        $this->expectException('Xi\Filelib\InvalidArgumentException');
         $this->manager->addPlugin($plugin2, array(), 'tenhusen-suuruuden-ylistyksen-plugin');
     }
 
@@ -130,7 +130,7 @@ class PluginManagerTest extends \Xi\Filelib\Tests\TestCase
      */
     public function throwsUpWithNonExistingPlugin()
     {
-        $this->setExpectedException('Xi\Filelib\InvalidArgumentException');
+        $this->expectException('Xi\Filelib\InvalidArgumentException');
         return $this->manager->getPlugin('tenhusen-ylistyksen-suuruuden-plugari');
     }
 

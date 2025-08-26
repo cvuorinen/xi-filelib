@@ -24,7 +24,7 @@ class AuthorizationPluginTest extends TestCase
 
     public function setUp()
     {
-        $this->adapter = $this->getMock('Xi\Filelib\Authorization\AuthorizationAdapter');
+        $this->adapter = $this->createMock('Xi\Filelib\Authorization\AuthorizationAdapter');
         $this->ed = $this->getMockedEventDispatcher();
         $this->filelib = $this->getMockedFilelib(null, null, null, null, $this->ed);
     }
@@ -94,7 +94,7 @@ class AuthorizationPluginTest extends TestCase
 
         $class = ($identifiable instanceof File) ? 'file' : 'folder';
 
-        $this->setExpectedException(
+        $this->expectException(
             'Xi\Filelib\Authorization\AccessDeniedException',
             "{$expectedException} access to {$class} #{$identifiable->getId()} was denied"
         );

@@ -353,7 +353,7 @@ class FileLibraryTest extends TestCase
         $filelib = new FileLibrary(
             $this->prophesize(StorageAdapter::class)->reveal(),
             $this->prophesize(BackendAdapter::class)->reveal(),
-            $this->prophesize(EventDispatcherInterface::class)->reveal(),
+            $this->getMockedEventDispatcher(),
             sys_get_temp_dir()
         );
 
@@ -370,7 +370,7 @@ class FileLibraryTest extends TestCase
         $filelib = new FileLibrary(
             $this->prophesize(StorageAdapter::class)->reveal(),
             $this->prophesize(BackendAdapter::class)->reveal(),
-            $this->prophesize(EventDispatcherInterface::class)->reveal(),
+            $this->getMockedEventDispatcher(),
             $tfm
         );
 

@@ -53,6 +53,8 @@ class ResourceRepositoryTest extends \Xi\Filelib\Tests\TestCase
     public function setUp()
     {
         $this->ed = $this->prophesize('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $this->ed->dispatch(Argument::cetera())->will(function ($args) { return $args[0]; });
+        $this->ed->addSubscriber(Argument::cetera())->willReturn(null);
         $this->filelib = $this->getFilelib(true);
         $this->op = $this->filelib->getResourceRepository();
     }
@@ -168,8 +170,8 @@ class ResourceRepositoryTest extends \Xi\Filelib\Tests\TestCase
             'id' => 'xoo-xoo-xoo'
         ]);
 
-        $storage = $this->getMock(StorageAdapter::class);
-        $backend = $this->getMock(BackendAdapter::class);
+        $storage = $this->createMock(StorageAdapter::class);
+        $backend = $this->createMock(BackendAdapter::class);
 
         $storage->expects($this->any())->method('store')->withAnyParameters()->willThrowException(new FileIOException('Uh oh'));
         $backend->expects($this->once())->method('createResource');
@@ -184,7 +186,7 @@ class ResourceRepositoryTest extends \Xi\Filelib\Tests\TestCase
         $op = new ResourceRepository();
         $op->attachTo($filelib);
 
-        $this->setExpectedException(FileIOException::class);
+        $this->expectException(FileIOException::class);
 
         $op->create(
             $resource,

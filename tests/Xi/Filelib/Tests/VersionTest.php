@@ -11,7 +11,7 @@ namespace Xi\Filelib\Tests;
 
 use Xi\Filelib\Version;
 
-class VersionTest extends \PHPUnit_Framework_TestCase
+class VersionTest extends \PHPUnit\Framework\TestCase
 {
     public function provideVersionOptions()
     {
@@ -106,7 +106,7 @@ class VersionTest extends \PHPUnit_Framework_TestCase
     public function invalidVersionsThrowUp($identifier, $valid)
     {
         if (!$valid) {
-            $this->setExpectedException('Xi\Filelib\InvalidVersionException');
+            $this->expectException('Xi\Filelib\InvalidVersionException');
         }
         $version = Version::get($identifier);
 

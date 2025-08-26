@@ -63,7 +63,7 @@ class OriginalVersionPluginTest extends TestCase
     public function checksVersionValidity($version, $expected)
     {
         if (!$expected) {
-            $this->setExpectedException('Xi\Filelib\InvalidVersionException');
+            $this->expectException('Xi\Filelib\InvalidVersionException');
         }
 
         $plugin = new OriginalVersionPlugin('originale');

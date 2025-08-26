@@ -478,7 +478,7 @@ class PublisherTest extends TestCase
      */
     public function reverseThrowsUpWithLegacyLinker()
     {
-        $this->setExpectedException('Xi\Filelib\RuntimeException');
+        $this->expectException('Xi\Filelib\RuntimeException');
 
         $linker = $this->getMockedLinker();
         $publisher = new Publisher($this->adapter, $linker);

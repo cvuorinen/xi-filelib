@@ -4,14 +4,6 @@ namespace Xi\Filelib\Tests\Backend\Adapter;
 
 use PDO;
 use PDOException;
-use PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection;
-use PHPUnit_Extensions_Database_DB_MetaData_MySQL;
-use PHPUnit_Extensions_Database_DefaultTester;
-use PHPUnit_Extensions_Database_Operation_Factory;
-use PHPUnit_Extensions_Database_Operation_Composite;
-use PHPUnit_Extensions_Database_Operation_IDatabaseOperation;
-use PHPUnit_Extensions_Database_DataSet_AbstractDataSet;
-use PHPUnit_Extensions_Database_DataSet_DefaultDataSet;
 use Exception;
 use Xi\Filelib\Tests\PHPUnit\Extensions\Database\Operation\MySQL55Truncate;
 use Xi\Filelib\Backend\Finder\FileFinder;
@@ -582,7 +574,7 @@ abstract class RelationalDbTestCase extends AbstractBackendAdapterTestCase
     {
         $this->dataSet = $dataSet;
 
-        $this->databaseTester = new PHPUnit_Extensions_Database_DefaultTester($this->getConnection());
+        $this->databaseTester = new \PHPUnit\DbUnit\DefaultTester($this->getConnection());
         $this->databaseTester->setSetUpOperation($this->getSetUpOperation());
         $this->databaseTester->setDataSet($this->getDataSet($dataSet));
         $this->databaseTester->onSetUp();
@@ -609,7 +601,7 @@ abstract class RelationalDbTestCase extends AbstractBackendAdapterTestCase
      */
     private function getEmptyDataSet()
     {
-        return new PHPUnit_Extensions_Database_DataSet_DefaultDataSet();
+        return new \PHPUnit\DbUnit\DataSet\DefaultDataSet();
     }
 
     /**
@@ -629,7 +621,7 @@ abstract class RelationalDbTestCase extends AbstractBackendAdapterTestCase
             $this->markTestSkipped('Could not connect to database.');
         }
 
-        return new PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection($pdo);
+        return new \PHPUnit\DbUnit\Database\DefaultConnection($pdo);
     }
 
     /**
@@ -638,15 +630,15 @@ abstract class RelationalDbTestCase extends AbstractBackendAdapterTestCase
     protected function getSetUpOperation()
     {
         if ($this->isMySQL()) {
-            return new PHPUnit_Extensions_Database_Operation_Composite(
+            return new \PHPUnit\DbUnit\Operation\Composite(
                 array(
                     new MySQL55Truncate(true),
-                    PHPUnit_Extensions_Database_Operation_Factory::INSERT()
+                    \PHPUnit\DbUnit\Operation\Factory::INSERT()
                 )
             );
         }
 
-        return PHPUnit_Extensions_Database_Operation_Factory::CLEAN_INSERT(true);
+        return \PHPUnit\DbUnit\Operation\Factory::CLEAN_INSERT(true);
     }
 
     /**
@@ -655,14 +647,14 @@ abstract class RelationalDbTestCase extends AbstractBackendAdapterTestCase
     protected function getTearDownOperation()
     {
         if ($this->isMySQL()) {
-            return new PHPUnit_Extensions_Database_Operation_Composite(
+            return new \PHPUnit\DbUnit\Operation\Composite(
                 array(
                     new MySQL55Truncate(true)
                 )
             );
         }
 
-        return PHPUnit_Extensions_Database_Operation_Factory::TRUNCATE(true);
+        return \PHPUnit\DbUnit\Operation\Factory::TRUNCATE(true);
     }
 
     /**

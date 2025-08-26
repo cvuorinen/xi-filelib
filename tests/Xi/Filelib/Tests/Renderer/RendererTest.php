@@ -11,7 +11,7 @@ class RendererTest extends RendererTestCase
 {
     public function getAdapter()
     {
-        return $this->getMock('Xi\Filelib\Renderer\Adapter\RendererAdapter');
+        return $this->createMock('Xi\Filelib\Renderer\Adapter\RendererAdapter');
     }
 
     public function getRenderer($adapter)

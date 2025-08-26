@@ -81,7 +81,7 @@ class FindByIdsRequestTest extends TestCase
     {
         $request = new FindByIdsRequest(array(1), 'Xi\Filelib\File\File');
 
-        $resolver = $this->getMock('Xi\Filelib\Backend\FindByIdsRequestResolver');
+        $resolver = $this->createMock('Xi\Filelib\Backend\FindByIdsRequestResolver');
         $resolver
             ->expects($this->once())
             ->method('findByIds')

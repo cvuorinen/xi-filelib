@@ -153,7 +153,7 @@ class StorageTest extends \Xi\Filelib\Tests\TestCase
      */
     public function retrieveShouldThrowExceptionIfFileIsNotFound()
     {
-        $this->setExpectedException('Xi\Filelib\Storage\FileIOException');
+        $this->expectException('Xi\Filelib\Storage\FileIOException');
 
         $this->ed->expects($this->never())->method('dispatch');
 
@@ -171,7 +171,7 @@ class StorageTest extends \Xi\Filelib\Tests\TestCase
      */
     public function retrieveVersionsShouldThrowExceptionIfFileIsNotFound()
     {
-        $this->setExpectedException('Xi\Filelib\Storage\FileIOException');
+        $this->expectException('Xi\Filelib\Storage\FileIOException');
 
         $this->ed->expects($this->never())->method('dispatch');
 
@@ -189,7 +189,7 @@ class StorageTest extends \Xi\Filelib\Tests\TestCase
      */
     public function deleteShouldThrowExceptionIfFileIsNotFound()
     {
-        $this->setExpectedException('Xi\Filelib\Storage\FileIOException');
+        $this->expectException('Xi\Filelib\Storage\FileIOException');
 
         $this->adapter
             ->expects($this->once())
@@ -205,7 +205,7 @@ class StorageTest extends \Xi\Filelib\Tests\TestCase
      */
     public function deleteVersionsShouldThrowExceptionIfFileIsNotFound()
     {
-        $this->setExpectedException('Xi\Filelib\Storage\FileIOException');
+        $this->expectException('Xi\Filelib\Storage\FileIOException');
 
         $this->adapter
             ->expects($this->once())

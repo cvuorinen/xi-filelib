@@ -74,7 +74,7 @@ class BasePluginTest extends TestCase
      */
     public function setProfileResolverExpectsCallable()
     {
-        $this->setExpectedException('Xi\Filelib\InvalidArgumentException');
+        $this->expectException('Xi\Filelib\InvalidArgumentException');
 
         $plugin = $this
             ->getMockBuilder('Xi\Filelib\Plugin\BasePlugin')

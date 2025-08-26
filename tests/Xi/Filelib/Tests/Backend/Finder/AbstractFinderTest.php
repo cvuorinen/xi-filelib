@@ -39,7 +39,7 @@ class AbstractFinderTest extends TestCase
      */
     public function addParameterShouldThrowExceptionIfFieldDoesNotExist()
     {
-        $this->setExpectedException('Xi\Filelib\Backend\Finder\FinderException');
+        $this->expectException('Xi\Filelib\Backend\Finder\FinderException');
         $this->finder->addParameter('sugen_sie', 'xooxoo');
     }
 

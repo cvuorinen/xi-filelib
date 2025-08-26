@@ -4,7 +4,7 @@ namespace Xi\Filelib\Tests\Event;
 
 use Xi\Filelib\Event\IdentifiableEvent;
 
-class IdentifiableEventTest extends \PHPUnit_Framework_TestCase
+class IdentifiableEventTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @test
@@ -22,7 +22,7 @@ class IdentifiableEventTest extends \PHPUnit_Framework_TestCase
      */
     public function eventInitializesCorrectly()
     {
-        $identifiable = $this->getMock('Xi\Filelib\Identifiable');
+        $identifiable = $this->createMock('Xi\Filelib\Identifiable');
         $event = new IdentifiableEvent($identifiable);
 
         $identifiable2 = $event->getIdentifiable();

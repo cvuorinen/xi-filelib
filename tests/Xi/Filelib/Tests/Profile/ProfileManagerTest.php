@@ -120,7 +120,7 @@ class ProfileManagerTest extends \Xi\Filelib\Tests\TestCase
         $profile2 = new FileProfile('xooxer');
 
         $this->manager->addProfile($profile);
-        $this->setExpectedException('Xi\Filelib\InvalidArgumentException');
+        $this->expectException('Xi\Filelib\InvalidArgumentException');
         $this->manager->addProfile($profile2);
     }
 
@@ -129,7 +129,7 @@ class ProfileManagerTest extends \Xi\Filelib\Tests\TestCase
      */
     public function getProfileShouldFailWhenProfileDoesNotExist()
     {
-        $this->setExpectedException('Xi\Filelib\InvalidArgumentException');
+        $this->expectException('Xi\Filelib\InvalidArgumentException');
         $prof = $this->manager->getProfile('xooxer');
     }
 

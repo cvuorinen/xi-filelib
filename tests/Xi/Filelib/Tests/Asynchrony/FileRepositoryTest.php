@@ -154,7 +154,7 @@ class FileRepositoryTest extends TestCase
      */
     public function throwsUpOnGettingNonexistantCommand()
     {
-        $this->setExpectedException('Xi\Filelib\LogicException');
+        $this->expectException('Xi\Filelib\LogicException');
         $this->filelib->getFileRepository()->getExecutionStrategy('lussutus');
     }
 
@@ -163,7 +163,7 @@ class FileRepositoryTest extends TestCase
      */
     public function throwsUpOnSettingNonexistantCommand()
     {
-        $this->setExpectedException('Xi\Filelib\LogicException');
+        $this->expectException('Xi\Filelib\LogicException');
         $this->filelib->getFileRepository()->setExecutionStrategy(
             'lussutus',
             ExecutionStrategies::STRATEGY_ASYNC_PEKKIS_QUEUE

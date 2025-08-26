@@ -28,7 +28,7 @@ class IdentityMapTest extends TestCase
 
     public function setUp()
     {
-        $this->ed = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $this->ed = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $this->im = new IdentityMap($this->ed);
     }
 
@@ -163,7 +163,7 @@ class IdentityMapTest extends TestCase
      */
     public function addShouldThrowExceptionWhenAddingObjectWithoutId()
     {
-        $this->setExpectedException('Xi\Filelib\Backend\IdentityMap\IdentityMapException');
+        $this->expectException('Xi\Filelib\Backend\IdentityMap\IdentityMapException');
         $this->ed
             ->expects($this->never())
             ->method('dispatch');

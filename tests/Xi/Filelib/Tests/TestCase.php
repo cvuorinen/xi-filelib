@@ -5,7 +5,7 @@ namespace Xi\Filelib\Tests;
 use Pekkis\TemporaryFileManager\TemporaryFileManager;
 use Xi\Filelib\Profile\FileProfile;
 
-class TestCase extends \PHPUnit_Framework_TestCase
+class TestCase extends \PHPUnit\Framework\TestCase
 {
 
     /**
@@ -60,9 +60,11 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
         $ret = $filelib->getMock();
 
-        $ret->expects($this->any())
-            ->method('getTemporaryFileManager')
-            ->will($this->returnValue(new TemporaryFileManager(ROOT_TESTS . '/data/temp')));
+        if ($methods === null) {
+            $ret->expects($this->any())
+                ->method('getTemporaryFileManager')
+                ->will($this->returnValue(new TemporaryFileManager(ROOT_TESTS . '/data/temp')));
+        }
 
         if ($fire) {
             $ret->expects($this->any())->method('getFileRepository')->will($this->returnValue($fire));
@@ -173,7 +175,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function getMockedStorageAdapter()
     {
-        return $this->getMock('Xi\Filelib\Storage\Adapter\StorageAdapter');
+        return $this->createMock('Xi\Filelib\Storage\Adapter\StorageAdapter');
     }
 
     /**
@@ -198,7 +200,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function getMockedLinker()
     {
-        return $this->getMock('Xi\Filelib\Publisher\Linker');
+        return $this->createMock('Xi\Filelib\Publisher\Linker');
     }
 
     /**
@@ -206,7 +208,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function getMockedReversibleLinker()
     {
-        return $this->getMock('Xi\Filelib\Publisher\ReversibleLinker');
+        return $this->createMock('Xi\Filelib\Publisher\ReversibleLinker');
     }
 
     public function getMockedImagick($path = null)
@@ -235,7 +237,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function getMockedQueueAdapter()
     {
-        return $this->getMock('Pekkis\Queue\Adapter\Adapter');
+        return $this->createMock('Pekkis\Queue\Adapter\Adapter');
     }
 
     /**
@@ -243,7 +245,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function getMockedEventDispatcher()
     {
-        return $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        return $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
     }
 
     /**
@@ -259,7 +261,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function getMockedPublisherAdapter()
     {
-        return $this->getMock('Xi\Filelib\Publisher\PublisherAdapter');
+        return $this->createMock('Xi\Filelib\Publisher\PublisherAdapter');
     }
 
     /**
@@ -267,7 +269,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function getMockedBackendAdapter()
     {
-        return $this->getMock('Xi\Filelib\Backend\Adapter\BackendAdapter');
+        return $this->createMock('Xi\Filelib\Backend\Adapter\BackendAdapter');
     }
 
     /**
@@ -308,7 +310,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function getMockedPlugin()
     {
-        $plugin = $this->getMock('Xi\Filelib\Plugin\Plugin');
+        $plugin = $this->createMock('Xi\Filelib\Plugin\Plugin');
         return $plugin;
     }
 
@@ -317,7 +319,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function getMockedCommand($topic = 'some_random_topic', $expectToBeExecuted = null)
     {
-        $mock = $this->getMock('Xi\Filelib\Command\Command');
+        $mock = $this->createMock('Xi\Filelib\Command\Command');
         $mock->expects($this->any())->method('getTopic')->will($this->returnValue($topic));
 
         // Horrible fate :(
@@ -347,7 +349,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function getMockedExecutionStrategy()
     {
-        return $this->getMock('Xi\Filelib\Command\ExecutionStrategy\ExecutionStrategy');
+        return $this->createMock('Xi\Filelib\Command\ExecutionStrategy\ExecutionStrategy');
     }
 
     /**
@@ -393,7 +395,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function getMockedCacheAdapter()
     {
-        return $this->getMock('Xi\Filelib\Backend\Cache\Adapter\CacheAdapter');
+        return $this->createMock('Xi\Filelib\Backend\Cache\Adapter\CacheAdapter');
     }
 
     public function assertClassExists($className)

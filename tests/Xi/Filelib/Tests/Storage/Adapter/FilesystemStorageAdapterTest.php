@@ -57,7 +57,7 @@ class FilesystemStorageAdapterTest extends TestCase
     {
         $root = ROOT_TESTS . '/data/illusive_directory';
 
-        $this->setExpectedException('Xi\Filelib\Storage\FileIOException');
+        $this->expectException('Xi\Filelib\Storage\FileIOException');
         new FilesystemStorageAdapter($root);
     }
 
@@ -73,7 +73,7 @@ class FilesystemStorageAdapterTest extends TestCase
 
         $resource = Resource::create(['id' => 666, 'uuid' => Uuid::uuid4()]);
 
-        $this->setExpectedException('Xi\Filelib\Storage\FileIOException');
+        $this->expectException('Xi\Filelib\Storage\FileIOException');
         $storage->store(
             $resource,
             $this->getSelfLussingManatee()
@@ -92,7 +92,7 @@ class FilesystemStorageAdapterTest extends TestCase
 
         $resource = Resource::create(['id' => 666, 'uuid' => Uuid::uuid4()]);
 
-        $this->setExpectedException('Xi\Filelib\Storage\FileIOException');
+        $this->expectException('Xi\Filelib\Storage\FileIOException');
         $storage->storeVersion(
             $resource,
             Version::get('puupster'),

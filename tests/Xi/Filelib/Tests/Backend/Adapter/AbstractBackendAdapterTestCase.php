@@ -2,7 +2,7 @@
 
 namespace Xi\Filelib\Tests\Backend\Adapter;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use DateTime;
 use Xi\Filelib\Backend\FindByIdsRequest;
 use Xi\Filelib\Backend\Adapter\BackendAdapter;
@@ -15,7 +15,7 @@ use Xi\Filelib\Backend\Finder\Finder;
 /**
  * @group backend
  */
-abstract class AbstractBackendAdapterTestCase extends PHPUnit_Framework_TestCase
+abstract class AbstractBackendAdapterTestCase extends TestCase
 {
     /**
      * @var BackendAdapter

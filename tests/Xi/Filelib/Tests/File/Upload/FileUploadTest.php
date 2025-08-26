@@ -18,7 +18,7 @@ class FileUploadTest extends TestCase
      */
     public function throwsUpIfPathIsInvalid()
     {
-        $this->setExpectedException('Xi\Filelib\RuntimeException');
+        $this->expectException('Xi\Filelib\RuntimeException');
         new FileUpload(ROOT_TESTS . '/invalid-file.lus');
     }
 

@@ -100,7 +100,7 @@ class LazyReferenceResolverTest extends TestCase
         $resolver = new LazyReferenceResolver($resolvee, 'Xi\Filelib\Storage\Storage');
         $resolver->attachTo($filelib);
 
-        $this->setExpectedException('Xi\Filelib\LogicException');
+        $this->expectException('Xi\Filelib\LogicException');
         $resolver->resolve();
     }
 

@@ -52,6 +52,8 @@ class FileRepositoryTest extends \Xi\Filelib\Tests\TestCase
     public function setUp()
     {
         $this->ed = $this->prophesize('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $this->ed->dispatch(Argument::cetera())->will(function ($args) { return $args[0]; });
+        $this->ed->addSubscriber(Argument::cetera())->willReturn(null);
         $this->filelib = $this->getFilelib(true);
 
         $this->op = $this->filelib->getFileRepository();

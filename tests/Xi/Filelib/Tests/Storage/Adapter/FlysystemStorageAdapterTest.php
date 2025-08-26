@@ -75,7 +75,7 @@ class FlysystemStorageAdapterTest extends TestCase
 
         $filesystem->get(Argument::type('string'))->shouldBeCalled()->willReturn(false);
 
-        $this->setExpectedException(FileIOException::class);
+        $this->expectException(FileIOException::class);
 
         $adapter->retrieve($resource);
     }
@@ -95,7 +95,7 @@ class FlysystemStorageAdapterTest extends TestCase
 
         $filesystem->get(Argument::type('string'), Argument::any())->shouldBeCalled()->willReturn(false);
 
-        $this->setExpectedException(FileIOException::class);
+        $this->expectException(FileIOException::class);
 
         $adapter->retrieveVersion($resource, Version::get('tussi'));
     }
@@ -115,7 +115,7 @@ class FlysystemStorageAdapterTest extends TestCase
 
         $filesystem->delete(Argument::type('string'))->shouldBeCalled()->willReturn(false);
 
-        $this->setExpectedException(FileIOException::class);
+        $this->expectException(FileIOException::class);
 
         $adapter->delete($resource);
     }
@@ -135,7 +135,7 @@ class FlysystemStorageAdapterTest extends TestCase
 
         $filesystem->delete(Argument::type('string'), Argument::any())->shouldBeCalled()->willReturn(false);
 
-        $this->setExpectedException(FileIOException::class);
+        $this->expectException(FileIOException::class);
 
         $adapter->deleteVersion($resource, Version::get('tussi'));
     }
@@ -163,7 +163,7 @@ class FlysystemStorageAdapterTest extends TestCase
             ]
         )->shouldBeCalled()->willReturn(false);
 
-        $this->setExpectedException(FileIOException::class);
+        $this->expectException(FileIOException::class);
 
         $adapter->store($resource, $tmp);
     }
@@ -191,7 +191,7 @@ class FlysystemStorageAdapterTest extends TestCase
             ]
         )->shouldBeCalled()->willReturn(false);
 
-        $this->setExpectedException(FileIOException::class);
+        $this->expectException(FileIOException::class);
 
         $adapter->storeVersion($resource, Version::get('tussi'), $tmp);
     }

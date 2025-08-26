@@ -35,7 +35,7 @@ class DoctrineDbalBackendAdapterTest extends RelationalDbTestCase
      */
     public function failsWhenPlatformIsNotSupported()
     {
-        $this->setExpectedException('RuntimeException');
+        $this->expectException('RuntimeException');
 
         $conn = $this->getMockBuilder('Doctrine\DBAL\Connection')->disableOriginalConstructor()->getMock();
         $platform = $this->getMockBuilder('Doctrine\DBAL\Platforms\AbstractPlatform')->getMockForAbstractClass();

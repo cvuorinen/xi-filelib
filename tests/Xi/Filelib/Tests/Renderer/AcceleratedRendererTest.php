@@ -204,7 +204,7 @@ class AcceleratedRendererTest extends RendererTestCase
 
     public function getAdapter()
     {
-        return $this->getMock('Xi\Filelib\Renderer\Adapter\AcceleratedRendererAdapter');
+        return $this->createMock('Xi\Filelib\Renderer\Adapter\AcceleratedRendererAdapter');
     }
 
     public function getRenderer($adapter)

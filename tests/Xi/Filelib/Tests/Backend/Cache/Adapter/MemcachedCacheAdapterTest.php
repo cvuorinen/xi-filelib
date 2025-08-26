@@ -43,7 +43,7 @@ class MemcachedCacheAdapterTest extends TestCase
      */
     public function failsToSaveNonIdentifiable()
     {
-        $this->setExpectedException('Xi\Filelib\RuntimeException');
+        $this->expectException('Xi\Filelib\RuntimeException');
 
         $file = File::create();
         $this->cache->save($file);

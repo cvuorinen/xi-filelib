@@ -73,7 +73,7 @@ class ImageMagickHelperTest extends TestCase
 
         $this->assertCount(0, $helper->getCommands());
 
-        $mock = $this->getMock('Xi\Filelib\Plugin\Image\Command\Command');
+        $mock = $this->createMock('Xi\Filelib\Plugin\Image\Command\Command');
         $mock->expects($this->once())->method('setHelper')->with($helper);
 
         $helper->addCommand($mock);
@@ -83,7 +83,7 @@ class ImageMagickHelperTest extends TestCase
 
         $this->assertSame($mock, array_pop($commands));
 
-        $mock2 = $this->getMock('Xi\Filelib\Plugin\Image\Command\Command');
+        $mock2 = $this->createMock('Xi\Filelib\Plugin\Image\Command\Command');
         $helper->addCommand($mock2);
 
         $this->assertCount(2, $helper->getCommands());
@@ -99,13 +99,13 @@ class ImageMagickHelperTest extends TestCase
             new TemporaryFileManager(ROOT_TESTS . '/data/temp')
         );
 
-        $mock = $this->getMock('Xi\Filelib\Plugin\Image\Command\Command');
+        $mock = $this->createMock('Xi\Filelib\Plugin\Image\Command\Command');
         $mock
             ->expects($this->once())
             ->method('execute')
             ->with($this->isInstanceOf('Imagick'));
 
-        $mock2 = $this->getMock('Xi\Filelib\Plugin\Image\Command\Command');
+        $mock2 = $this->createMock('Xi\Filelib\Plugin\Image\Command\Command');
         $mock2
             ->expects($this->once())
             ->method('execute')
@@ -132,7 +132,7 @@ class ImageMagickHelperTest extends TestCase
 
         $helper->execute();
 
-        $this->setExpectedException('Xi\Filelib\RuntimeException');
+        $this->expectException('Xi\Filelib\RuntimeException');
         $helper->execute();
     }
 
@@ -146,7 +146,7 @@ class ImageMagickHelperTest extends TestCase
             new TemporaryFileManager(ROOT_TESTS . '/data/temp')
         );
 
-        $this->setExpectedException('Xi\Filelib\RuntimeException');
+        $this->expectException('Xi\Filelib\RuntimeException');
         $helper->execute();
     }
 

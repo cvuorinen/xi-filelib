@@ -90,7 +90,7 @@ class ArbitraryVersionPluginTest extends TestCase
      */
     public function throwsUpWhenMimeTypeIsNotGot()
     {
-        $this->setExpectedException('Xi\Filelib\RuntimeException');
+        $this->expectException('Xi\Filelib\RuntimeException');
 
         $plugin = new ArbitraryVersionPlugin(
             'arbitrage',
@@ -278,7 +278,7 @@ class ArbitraryVersionPluginTest extends TestCase
     public function checksVersionValidity($version, $expected)
     {
         if (!$expected) {
-            $this->setExpectedException('Xi\Filelib\InvalidVersionException');
+            $this->expectException('Xi\Filelib\InvalidVersionException');
         }
 
         $plugin = new ArbitraryVersionPlugin(

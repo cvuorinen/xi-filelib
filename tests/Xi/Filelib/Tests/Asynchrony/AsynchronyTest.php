@@ -45,7 +45,7 @@ class AsynchronyTest extends TestCase
             new MemoryBackendAdapter()
         );
         $asynchrony = new Asynchrony($filelib);
-        $this->setExpectedException('Xi\Filelib\LogicException');
+        $this->expectException('Xi\Filelib\LogicException');
 
         $asynchrony->getStrategy(ExecutionStrategies::STRATEGY_ASYNC_PEKKIS_QUEUE);
     }
@@ -61,7 +61,7 @@ class AsynchronyTest extends TestCase
         );
         $asynchrony = new Asynchrony($filelib);
 
-        $this->setExpectedException('Xi\Filelib\LogicException');
+        $this->expectException('Xi\Filelib\LogicException');
         $asynchrony->addStrategy(new SynchronousExecutionStrategy());
     }
 

@@ -73,7 +73,7 @@ class PekkisQueueExecutionStrategyTest extends \Xi\Filelib\Tests\TestCase
             $this->queue
         );
 
-        $this->setExpectedException('Xi\Filelib\LogicException');
+        $this->expectException('Xi\Filelib\LogicException');
         $strategy->execute('\touchMyTrallala', [6]);
     }
 

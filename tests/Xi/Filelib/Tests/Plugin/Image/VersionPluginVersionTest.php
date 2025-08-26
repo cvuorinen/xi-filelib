@@ -5,7 +5,7 @@ namespace Xi\Filelib\Tests\Plugin\Image;
 use Xi\Filelib\Plugin\Image\Command\ExecuteMethodCommand;
 use Xi\Filelib\Plugin\Image\VersionPluginVersion;
 
-class VersionPluginVersionTest extends \PHPUnit_Framework_TestCase
+class VersionPluginVersionTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @test

@@ -67,7 +67,7 @@ class SymlinkFilesystemPublisherAdapterTest extends TestCase
             new MemoryBackendAdapter()
         );
 
-        $this->setExpectedException('Xi\Filelib\InvalidArgumentException');
+        $this->expectException('Xi\Filelib\InvalidArgumentException');
 
         $adapter = new SymlinkFilesystemPublisherAdapter(ROOT_TESTS . '/data/publisher/public');
         $adapter->attachTo($filelib);
