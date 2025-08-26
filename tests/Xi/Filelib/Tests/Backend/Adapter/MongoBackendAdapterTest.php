@@ -50,6 +50,7 @@ class MongoBackendAdapterTest extends AbstractBackendAdapterTestCase
                     'root' => 'array',
                 ],
             ]);
+            $mongo->listDatabaseNames();
         } catch (\Exception $e) {
             return $this->markTestSkipped('Can not connect to MongoDB.');
         }
