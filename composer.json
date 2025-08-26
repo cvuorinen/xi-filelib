@@ -20,8 +20,8 @@
     ],
 
     "require": {
-        "php": ">=7.1.0",
-        "symfony/event-dispatcher": "~3.4|~4.0",
+        "php": ">=7.4.0",
+        "symfony/event-dispatcher": "~5.0",
         "ramsey/uuid": "~3.8",
         "cocur/slugify": "~3.1",
         "pekkis/queue": "~4.0",
@@ -40,11 +40,10 @@
         "doctrine/orm": "~2.6",
         "doctrine/dbal": "~2.8",
         "doctrine/common": "~2.9",
-        "symfony/http-foundation": "~4.0",
-        "symfony/http-kernel": "~4.0",
-        "symfony/security": "~4.0",
-        "symfony/console": "~4.0",
-        "symfony/stopwatch": "~4.0",
+        "symfony/http-foundation": "~5.0",
+        "symfony/http-kernel": "~5.0",
+        "symfony/console": "~5.0",
+        "symfony/stopwatch": "~5.0",
         "knplabs/gaufrette": "~0.6",
         "league/flysystem": "~1.0",
         "mongodb/mongodb": "^1.4"

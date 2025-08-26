@@ -51,8 +51,8 @@ class FindByIdsRequestTest extends TestCase
                 ->expects($this->once())
                 ->method('dispatch')
                 ->with(
-                    Events::IDENTIFIABLE_INSTANTIATE,
-                    $this->isInstanceOf('Xi\Filelib\Event\IdentifiableEvent')
+                    $this->isInstanceOf('Xi\Filelib\Event\IdentifiableEvent'),
+                    Events::IDENTIFIABLE_INSTANTIATE
                 );
         } else {
             $ed

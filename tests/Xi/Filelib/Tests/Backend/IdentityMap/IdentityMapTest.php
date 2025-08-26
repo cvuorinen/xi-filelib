@@ -271,16 +271,16 @@ class IdentityMapTest extends TestCase
             ->expects($this->at(0))
             ->method('dispatch')
             ->with(
-                Events::IDENTITYMAP_BEFORE_ADD,
-                $this->isInstanceOf('Xi\Filelib\Event\IdentifiableEvent')
+                $this->isInstanceOf('Xi\Filelib\Event\IdentifiableEvent'),
+                Events::IDENTITYMAP_BEFORE_ADD
             );
 
         $this->ed
             ->expects($this->at(1))
             ->method('dispatch')
             ->with(
-                Events::IDENTITYMAP_AFTER_ADD,
-                $this->isInstanceOf('Xi\Filelib\Event\IdentifiableEvent')
+                $this->isInstanceOf('Xi\Filelib\Event\IdentifiableEvent'),
+                Events::IDENTITYMAP_AFTER_ADD
             );
 
         $this->im->add($object);
@@ -297,16 +297,16 @@ class IdentityMapTest extends TestCase
             ->expects($this->at(2))
             ->method('dispatch')
             ->with(
-                Events::IDENTITYMAP_BEFORE_REMOVE,
-                $this->isInstanceOf('Xi\Filelib\Event\IdentifiableEvent')
+                $this->isInstanceOf('Xi\Filelib\Event\IdentifiableEvent'),
+                Events::IDENTITYMAP_BEFORE_REMOVE
             );
 
         $this->ed
             ->expects($this->at(3))
             ->method('dispatch')
             ->with(
-                Events::IDENTITYMAP_AFTER_REMOVE,
-                $this->isInstanceOf('Xi\Filelib\Event\IdentifiableEvent')
+                $this->isInstanceOf('Xi\Filelib\Event\IdentifiableEvent'),
+                Events::IDENTITYMAP_AFTER_REMOVE
             );
 
         $this->im->add($object);

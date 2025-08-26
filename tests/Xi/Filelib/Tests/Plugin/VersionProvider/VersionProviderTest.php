@@ -399,7 +399,6 @@ class VersionProviderTest extends TestCase
             ->expects($this->once())
             ->method('dispatch')
             ->with(
-                VPEvents::VERSIONS_UNPROVIDED,
                 new VersionProviderEvent(
                     $this->plugin,
                     $resource,
@@ -407,7 +406,8 @@ class VersionProviderTest extends TestCase
                         Version::get('xooxer'),
                         Version::get('lusser')
                     )
-                )
+                ),
+                VPEvents::VERSIONS_UNPROVIDED
             );
 
         $this->plugin->setProfiles(array('tussi', 'lussi'));
@@ -631,8 +631,8 @@ class VersionProviderTest extends TestCase
             ->expects($this->once())
             ->method('dispatch')
             ->with(
-                VPEvents::VERSIONS_PROVIDED,
-                new VersionProviderEvent($this->plugin, $file, array(Version::get('tooxer')))
+                new VersionProviderEvent($this->plugin, $file, array(Version::get('tooxer'))),
+                VPEvents::VERSIONS_PROVIDED
             );
 
         $this->plugin->provideVersion(
@@ -717,8 +717,8 @@ class VersionProviderTest extends TestCase
             ->expects($this->once())
             ->method('dispatch')
             ->with(
-                VPEvents::VERSIONS_PROVIDED,
-                new VersionProviderEvent($this->plugin, $file, array(Version::get('tooxer'), Version::get('mooxer')))
+                new VersionProviderEvent($this->plugin, $file, array(Version::get('tooxer'), Version::get('mooxer'))),
+                VPEvents::VERSIONS_PROVIDED
             );
 
         $this->plugin->provideAllVersions(

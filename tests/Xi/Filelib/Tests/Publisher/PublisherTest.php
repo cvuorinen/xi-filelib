@@ -325,7 +325,10 @@ class PublisherTest extends TestCase
         $this->ed
             ->expects($this->at(0))
             ->method('dispatch')
-            ->with(Events::FILE_BEFORE_PUBLISH, $this->isInstanceOf('Xi\Filelib\Event\PublisherEvent'));
+            ->with(
+                $this->isInstanceOf('Xi\Filelib\Event\PublisherEvent'),
+                Events::FILE_BEFORE_PUBLISH
+            );
 
         $this->adapter
             ->expects($this->at(1))
@@ -372,7 +375,10 @@ class PublisherTest extends TestCase
         $this->ed
             ->expects($this->at(1))
             ->method('dispatch')
-            ->with(Events::FILE_AFTER_PUBLISH, $this->isInstanceOf('Xi\Filelib\Event\PublisherEvent'));
+            ->with(
+                $this->isInstanceOf('Xi\Filelib\Event\PublisherEvent'),
+               Events::FILE_AFTER_PUBLISH
+            );
 
         $this->publisher->publishAllVersions($file);
 
@@ -411,7 +417,7 @@ class PublisherTest extends TestCase
         $this->ed
             ->expects($this->at(0))
             ->method('dispatch')
-            ->with(Events::FILE_BEFORE_UNPUBLISH, $this->isInstanceOf('Xi\Filelib\Event\PublisherEvent'));
+            ->with($this->isInstanceOf('Xi\Filelib\Event\PublisherEvent'), Events::FILE_BEFORE_UNPUBLISH);
 
         $this->adapter
             ->expects($this->at(1))
@@ -437,7 +443,7 @@ class PublisherTest extends TestCase
         $this->ed
             ->expects($this->at(1))
             ->method('dispatch')
-            ->with(Events::FILE_AFTER_UNPUBLISH, $this->isInstanceOf('Xi\Filelib\Event\PublisherEvent'));
+            ->with($this->isInstanceOf('Xi\Filelib\Event\PublisherEvent'), Events::FILE_AFTER_UNPUBLISH);
 
         $this->publisher->unpublishAllVersions($file);
 

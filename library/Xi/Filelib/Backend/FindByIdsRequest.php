@@ -110,8 +110,8 @@ class FindByIdsRequest
 
             if ($this->isOrigin && $this->eventDispatcher) {
                 $this->eventDispatcher->dispatch(
-                    Events::IDENTIFIABLE_INSTANTIATE,
-                    new IdentifiableEvent($identifiable)
+                    new IdentifiableEvent($identifiable),
+                    Events::IDENTIFIABLE_INSTANTIATE
                 );
             }
         }
