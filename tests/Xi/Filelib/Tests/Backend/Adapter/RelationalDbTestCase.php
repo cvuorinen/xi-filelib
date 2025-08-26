@@ -24,7 +24,7 @@ abstract class RelationalDbTestCase extends AbstractBackendAdapterTestCase
     /**
      * @throws Exception If no data set was used.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->conn->executeQuery("/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;");
         $this->conn->executeQuery("DELETE FROM xi_filelib_file");

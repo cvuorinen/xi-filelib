@@ -16,7 +16,7 @@ class FileProfileTest extends \Xi\Filelib\Tests\TestCase
      */
     private $fileProfile;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->fileProfile = new FileProfile('lussen');
     }
@@ -193,13 +193,15 @@ class FileProfileTest extends \Xi\Filelib\Tests\TestCase
 
     /**
      * @test
-     * @expectedException \InvalidArgumentException
      */
     public function getVersionProviderShouldFailWithNonExistingVersion()
     {
         $file = File::create(array(
             'resource' => Resource::create(array('mimetype' => 'xoo/lus'))
         ));
+
+        $this->expectException('\InvalidArgumentException');
+
         $this->fileProfile->getVersionProvider($file, Version::get('globalizer'));
     }
 

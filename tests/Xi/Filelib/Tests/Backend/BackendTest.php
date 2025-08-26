@@ -22,21 +22,21 @@ class BackendTest extends TestCase
     private $backend;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $im;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $platform;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $ed;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->platform = $this->createMock('Xi\Filelib\Backend\Adapter\BackendAdapter');
 

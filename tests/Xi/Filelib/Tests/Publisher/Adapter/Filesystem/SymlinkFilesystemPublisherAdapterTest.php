@@ -22,7 +22,7 @@ class SymlinkFilesystemPublisherAdapterTest extends TestCase
      */
     private $filelib;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->filelib = new FileLibrary(
             new FilesystemStorageAdapter(ROOT_TESTS . '/data/publisher/private'),
@@ -32,7 +32,7 @@ class SymlinkFilesystemPublisherAdapterTest extends TestCase
         $this->filelib->addPlugin(new OriginalVersionPlugin(), [], 'original');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $deletor = new RecursiveDirectoryDeletor('publisher/private');
         $deletor->delete();

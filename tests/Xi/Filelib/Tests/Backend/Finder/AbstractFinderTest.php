@@ -22,7 +22,7 @@ class AbstractFinderTest extends TestCase
         );
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         $finder = $this->getMockBuilder('Xi\Filelib\Backend\Finder\AbstractFinder')
                         ->setMethods(array('getFields', 'getResultClass'))

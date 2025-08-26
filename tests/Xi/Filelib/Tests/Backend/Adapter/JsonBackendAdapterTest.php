@@ -18,7 +18,7 @@ class JsonBackendAdapterTest extends AbstractBackendAdapterTestCase
     public function assertValidCreatedIdentifier($identifier)
     {
         $this->assertNotNull($identifier);
-        $this->assertInternalType('string', $identifier);
+        $this->assertIsString($identifier);
     }
 
     /**
@@ -31,7 +31,7 @@ class JsonBackendAdapterTest extends AbstractBackendAdapterTestCase
         return new JsonBackendAdapter(ROOT_TESTS . '/data/temp/json-platform.json');
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -40,7 +40,7 @@ class JsonBackendAdapterTest extends AbstractBackendAdapterTestCase
         }
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 

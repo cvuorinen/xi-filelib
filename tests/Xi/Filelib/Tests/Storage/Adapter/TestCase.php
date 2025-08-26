@@ -46,7 +46,7 @@ abstract class TestCase extends \Xi\Filelib\Tests\TestCase
      */
     abstract protected function getStorage();
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->resource = Resource::create([
             'id' => 1,
@@ -75,7 +75,7 @@ abstract class TestCase extends \Xi\Filelib\Tests\TestCase
 
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $deletor = new RecursiveDirectoryDeletor('files');
         $deletor->delete();

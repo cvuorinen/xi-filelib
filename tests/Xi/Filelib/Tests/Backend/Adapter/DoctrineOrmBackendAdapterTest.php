@@ -8,7 +8,6 @@ use Xi\Filelib\Folder\Folder;
 use Xi\Filelib\Resource\Resource;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
-use PHPUnit_Framework_MockObject_MockObject;
 
 /**
  * @group backend
@@ -137,7 +136,7 @@ class DoctrineOrmBackendAdapterTest extends RelationalDbTestCase
 
 
     /**
-     * @return PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     private function createEntityManagerMock()
     {

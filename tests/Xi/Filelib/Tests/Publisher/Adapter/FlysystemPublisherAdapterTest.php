@@ -17,7 +17,7 @@ use Aws\S3\S3Client;
 class FlysystemPublisherAdapterTest extends TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $linker;
 
@@ -32,12 +32,12 @@ class FlysystemPublisherAdapterTest extends TestCase
     private $filesystem;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $storage;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $vp;
 
@@ -49,7 +49,7 @@ class FlysystemPublisherAdapterTest extends TestCase
 
     private $version;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->version = Version::get('xooxer');
 
@@ -110,7 +110,7 @@ class FlysystemPublisherAdapterTest extends TestCase
             ->will($this->returnValue($this->path));
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $deletor = new RecursiveDirectoryDeletor('publisher/public');
         $deletor->delete();

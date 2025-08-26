@@ -19,13 +19,13 @@ use Xi\Filelib\Version;
  */
 class FilesystemStorageAdapterTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         chmod(ROOT_TESTS . '/data/files', 0775);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         chmod(ROOT_TESTS . '/data/files', 0775);

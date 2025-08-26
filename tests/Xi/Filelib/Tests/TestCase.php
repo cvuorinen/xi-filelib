@@ -9,7 +9,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
 {
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     public function getMockedFilelib(
         $methods = null,
@@ -128,7 +128,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     public function getMockedFileRepository($methods = array())
     {
@@ -143,7 +143,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     public function getMockedResourceRepository($methods = array())
     {
@@ -158,7 +158,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
 
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     public function getMockedFolderRepository()
     {
@@ -171,7 +171,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     public function getMockedStorageAdapter()
     {
@@ -179,7 +179,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     public function getMockedStorage($adapter = null)
     {
@@ -196,7 +196,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
 
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     public function getMockedLinker()
     {
@@ -204,7 +204,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     public function getMockedReversibleLinker()
     {
@@ -223,7 +223,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     public function getMockedQueue()
     {
@@ -233,7 +233,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     public function getMockedQueueAdapter()
     {
@@ -241,7 +241,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     public function getMockedEventDispatcher()
     {
@@ -249,7 +249,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     public function getMockedPublisher()
     {
@@ -257,7 +257,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     public function getMockedPublisherAdapter()
     {
@@ -265,7 +265,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     public function getMockedBackendAdapter()
     {
@@ -273,7 +273,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     public function getMockedBackend()
     {
@@ -286,7 +286,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     public function getMockedFileProfile($name = null)
     {
@@ -306,7 +306,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     public function getMockedPlugin()
     {
@@ -315,7 +315,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     public function getMockedCommand($topic = 'some_random_topic', $expectToBeExecuted = null)
     {
@@ -330,7 +330,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     public function getMockedExecutable($expectToBeExecuted = null)
     {
@@ -345,7 +345,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     public function getMockedExecutionStrategy()
     {
@@ -353,7 +353,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     public function getMockedFolder()
     {
@@ -364,7 +364,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     public function getMockedFile($profile = 'versioned')
     {
@@ -381,7 +381,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     public function getMockedResource()
     {
@@ -391,7 +391,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     public function getMockedCacheAdapter()
     {
@@ -424,7 +424,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     public function getMockedVersionProvider(
         $versions = array(),

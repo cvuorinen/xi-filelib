@@ -19,7 +19,7 @@ use Xi\Filelib\Folder\Folder;
  */
 class SequentialLinkerTest extends \Xi\Filelib\Tests\TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->version = Version::get('xoo');
 

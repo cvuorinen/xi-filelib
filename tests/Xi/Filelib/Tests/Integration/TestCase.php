@@ -63,7 +63,7 @@ class TestCase extends \Xi\Filelib\Tests\TestCase
     protected $conn;
 
 
-    public function setUp()
+    public function setUp(): void
     {
         /*
         if (!extension_loaded('mongo')) {
@@ -151,7 +151,7 @@ class TestCase extends \Xi\Filelib\Tests\TestCase
         $this->filelib = $filelib;
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $paths = array(
             ROOT_TESTS . '/data/files',

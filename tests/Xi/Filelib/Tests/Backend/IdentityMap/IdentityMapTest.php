@@ -22,11 +22,11 @@ class IdentityMapTest extends TestCase
     protected $im;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $ed;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->ed = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $this->im = new IdentityMap($this->ed);
@@ -324,8 +324,8 @@ class IdentityMapTest extends TestCase
      */
     public function removeShouldCleanInternalStateCorrectly()
     {
-        $this->assertAttributeCount(0, 'objects', $this->im);
-        $this->assertAttributeCount(0, 'objectIdentifiers', $this->im);
+        $this->assertAttribute(array(), 'objects', $this->im);
+        $this->assertAttribute(array(), 'objectIdentifiers', $this->im);
 
         $files = array(
             File::create(array('id' => 1)),
@@ -335,17 +335,16 @@ class IdentityMapTest extends TestCase
 
         foreach ($files as $file) {
             $this->im->add($file);
+            $this->assertTrue($this->im->has($file));
         }
-
-        $this->assertAttributeCount(3, 'objects', $this->im);
-        $this->assertAttributeCount(3, 'objectIdentifiers', $this->im);
 
         foreach ($files as $file) {
             $this->im->remove($file);
+            $this->assertFalse($this->im->has($file));
         }
 
-        $this->assertAttributeCount(0, 'objects', $this->im);
-        $this->assertAttributeCount(0, 'objectIdentifiers', $this->im);
+        $this->assertAttribute(array(), 'objects', $this->im);
+        $this->assertAttribute(array(), 'objectIdentifiers', $this->im);
     }
 
     /**
@@ -372,8 +371,8 @@ class IdentityMapTest extends TestCase
         $this->im->clear();
 
         $this->assertFalse($this->im->has($resource));
-        $this->assertAttributeEquals(array(), 'objects', $this->im);
-        $this->assertAttributeEquals(array(), 'objectIdentifiers', $this->im);
+        $this->assertAttribute(array(), 'objects', $this->im);
+        $this->assertAttribute(array(), 'objectIdentifiers', $this->im);
     }
 
     /**
@@ -415,4 +414,15 @@ class IdentityMapTest extends TestCase
         $this->assertFalse($this->im->isOrigin());
     }
 
+    protected function assertAttribute($expected, string $attributeName, $object): void
+    {
+        $reflection = new \ReflectionObject($object);
+        $property = $reflection->getProperty($attributeName);
+        $property->setAccessible(true);
+
+        $this->assertEquals(
+            $expected,
+            $property->getValue($object),
+        );
+    }
 }

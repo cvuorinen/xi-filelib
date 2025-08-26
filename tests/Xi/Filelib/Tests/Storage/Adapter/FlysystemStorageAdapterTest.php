@@ -43,7 +43,7 @@ class FlysystemStorageAdapterTest extends TestCase
         return $this->filesystem;
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $deletor = new RecursiveDirectoryDeletor('files');
         $deletor->delete();

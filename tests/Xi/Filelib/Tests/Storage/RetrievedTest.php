@@ -6,12 +6,12 @@ use Xi\Filelib\Storage\Retrieved;
 
 class RetrievedTest extends \Xi\Filelib\Tests\TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         copy(ROOT_TESTS . '/data/self-lussing-manatee.jpg', ROOT_TESTS . '/data/temp/sad-manatee.jpg');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         if (is_file(ROOT_TESTS . '/data/temp/sad-manatee.jpg')) {
             unlink(ROOT_TESTS . '/data/temp/sad-manatee.jpg');

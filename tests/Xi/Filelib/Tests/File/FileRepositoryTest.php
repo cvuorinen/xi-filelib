@@ -30,17 +30,17 @@ class FileRepositoryTest extends \Xi\Filelib\Tests\TestCase
     private $filelib;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $backend;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $ed;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $foop;
 
@@ -49,7 +49,7 @@ class FileRepositoryTest extends \Xi\Filelib\Tests\TestCase
      */
     private $op;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->ed = $this->prophesize('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $this->ed->dispatch(Argument::cetera())->will(function ($args) { return $args[0]; });
@@ -74,7 +74,7 @@ class FileRepositoryTest extends \Xi\Filelib\Tests\TestCase
         return $filelib;
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $deletor = new RecursiveDirectoryDeletor('files');
         $deletor->delete();

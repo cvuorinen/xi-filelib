@@ -26,7 +26,7 @@ class BeautifurlLinkerTest extends \Xi\Filelib\Tests\TestCase
 
     private $version;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->version = Version::get('xoo');
 

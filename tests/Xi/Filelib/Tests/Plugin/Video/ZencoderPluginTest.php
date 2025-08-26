@@ -34,21 +34,21 @@ class ZencoderPluginTest extends \Xi\Filelib\Tests\TestCase
     private $plugin;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $storage;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $zencoderService;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $amazonService;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists('Services_Zencoder')) {
             $this->markTestSkipped('ZencoderService class could not be loaded');
@@ -107,7 +107,7 @@ class ZencoderPluginTest extends \Xi\Filelib\Tests\TestCase
         $this->plugin->attachTo($filelib);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         if (!class_exists(S3Client::class)) {
             return;
@@ -242,7 +242,7 @@ class ZencoderPluginTest extends \Xi\Filelib\Tests\TestCase
     public function getOutputsToZencoderShouldReturnCorrectData()
     {
         $ret = $this->plugin->getOutputsToZencoder();
-        $this->assertInternalType('array', $ret);
+        $this->assertIsArray($ret);
         $this->assertCount(sizeof($this->config['outputs']), $ret);
 
         foreach ($ret as $rut) {
@@ -295,7 +295,7 @@ class ZencoderPluginTest extends \Xi\Filelib\Tests\TestCase
 
         $ret = $this->plugin->createAllTemporaryVersions($file);
 
-        $this->assertInternalType('array', $ret);
+        $this->assertIsArray($ret);
         $this->assertCount(4, $ret);
         $this->assertArrayHasKey('pygmi', $ret);
         $this->assertArrayHasKey('watussi', $ret);

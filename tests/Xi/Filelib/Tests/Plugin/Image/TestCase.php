@@ -16,14 +16,14 @@ use Imagick;
  */
 class TestCase extends \Xi\Filelib\Tests\TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists('Imagick')) {
             $this->markTestSkipped('ImageMagick extension not loaded');
         }
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         if (!class_exists('Imagick')) {
             $this->markTestSkipped('ImageMagick extension not loaded');

@@ -31,7 +31,7 @@ class FilelibMessageHandlerTest extends TestCase
         $this->assertFileExists(ROOT_TESTS . '/data/temp/ping.txt');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $deletor = new RecursiveDirectoryDeletor('temp');
         $deletor->delete();

@@ -33,7 +33,7 @@ class FileRepositoryTest extends TestCase
      */
     private $asynchrony;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->filelib = new FileLibrary(
             new MemoryStorageAdapter(),

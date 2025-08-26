@@ -22,19 +22,21 @@ class WatermarkCommandTest extends TestCase
 
     /**
      * @test
-     * @expectedException InvalidArgumentException
      */
     public function setWatermarkPositionShouldFailWithInvalidPosition()
     {
+        $this->expectException('\InvalidArgumentException');
+
         $command = new WatermarkCommand('tussi', 'lus', 5);
     }
 
     /**
      * @test
-     * @expectedException InvalidArgumentException
      */
     public function setWatermarkPositionShouldFailWithNonStringPosition()
     {
+        $this->expectException('\InvalidArgumentException');
+
         $command = new WatermarkCommand('tussi', new \stdClass, 10);
     }
 

@@ -45,13 +45,14 @@ class ExecuteMethodCommandTest extends TestCase
 
     /**
      * @test
-     * @expectedException BadMethodCallException
      */
     public function executeShouldFailWhenMethodIsNotCallable()
     {
         $command = new ExecuteMethodCommand('cropThumbnailImagee', array('sometimes', 'a banana'));
 
         $imagick = $this->getMockedImagick();
+
+        $this->expectException('\BadMethodCallException');
 
         $command->execute($imagick);
     }

@@ -15,22 +15,22 @@ use Xi\Filelib\Resource\Resource;
 abstract class RendererTestCase extends \Xi\Filelib\Tests\TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $storage;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $fiop;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $filelib;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $adapter;
 
@@ -40,7 +40,7 @@ abstract class RendererTestCase extends \Xi\Filelib\Tests\TestCase
     protected $renderer;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $ed;
 
@@ -48,7 +48,7 @@ abstract class RendererTestCase extends \Xi\Filelib\Tests\TestCase
 
     abstract public function getRenderer($adapter);
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->ed = $this->getMockedEventDispatcher();
         $this->fiop = $this->getMockedFileRepository();

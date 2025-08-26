@@ -14,7 +14,7 @@ use Xi\Collections\Collection\ArrayCollection;
 class CacheTest extends TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $adapter;
 
@@ -23,7 +23,7 @@ class CacheTest extends TestCase
      */
     private $cache;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists('Memcached')) {
             $this->markTestSkipped('Memcached required');

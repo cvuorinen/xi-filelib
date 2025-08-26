@@ -39,12 +39,12 @@ abstract class AbstractBackendAdapterTestCase extends TestCase
 
     abstract protected function assertValidCreatedIdentifier($identifier);
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->backend = $this->setUpBackend();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         // Unset to keep database connections from piling up.
         $this->backend = null;
@@ -502,7 +502,7 @@ abstract class AbstractBackendAdapterTestCase extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function getMockAndDisableOriginalConstructor($className)
     {

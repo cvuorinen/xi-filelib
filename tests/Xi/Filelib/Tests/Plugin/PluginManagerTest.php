@@ -13,7 +13,7 @@ use Xi\Filelib\Tests\Storage\Adapter\MemoryStorageAdapter;
 class PluginManagerTest extends \Xi\Filelib\Tests\TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $ed;
 
@@ -24,7 +24,7 @@ class PluginManagerTest extends \Xi\Filelib\Tests\TestCase
 
     private $filelib;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->ed = $this->getMockedEventDispatcher();
 

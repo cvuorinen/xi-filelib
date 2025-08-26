@@ -25,14 +25,14 @@ class PekkisQueueExecutionStrategyTest extends \Xi\Filelib\Tests\TestCase
      */
     private $queue;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists('Pekkis\Queue\Queue')) {
             $this->markTestSkipped('Pekkis\Queue\Queue class could not be loaded');
         }
 
         if (!getenv("RABBITMQ_HOST")) {
-            return $this->markTestSkipped('RabbitMQ not configured');
+            $this->markTestSkipped('RabbitMQ not configured');
         }
 
         $this->queue = new Queue(
@@ -49,7 +49,7 @@ class PekkisQueueExecutionStrategyTest extends \Xi\Filelib\Tests\TestCase
         $this->queue->purge();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $deletor = new RecursiveDirectoryDeletor('temp');
         $deletor->delete();

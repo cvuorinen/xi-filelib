@@ -27,11 +27,11 @@ class ChangeFormatPluginTest extends TestCase
     private $plugin;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $fileRepository;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

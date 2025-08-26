@@ -117,7 +117,7 @@ class OriginalVersionPluginTest extends TestCase
         $plugin = new OriginalVersionPlugin();
         $plugin->attachTo($filelib);
         $ret = $plugin->createAllTemporaryVersions($file);
-        $this->assertInternalType('array', $ret);
+        $this->assertIsArray($ret);
         $this->assertCount(1, $ret);
         $this->assertArrayHasKey('original', $ret);
         foreach ($ret as $tmp) {

@@ -35,7 +35,7 @@ class VersionProviderTest extends TestCase
     private $pm;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $storage;
 
@@ -52,16 +52,16 @@ class VersionProviderTest extends TestCase
     private $filelib;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $ed;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $fire;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

@@ -35,10 +35,10 @@ class VersionPluginTest extends TestCase
      */
     private $storage;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists('Imagick')) {
-            return $this->markTestSkipped('Imagick required');
+            $this->markTestSkipped('Imagick required');
         }
 
         parent::setUp();
@@ -138,7 +138,7 @@ class VersionPluginTest extends TestCase
 
         $this->plugin->attachTo($filelib);
         $ret = $this->plugin->createAllTemporaryVersions($file);
-        $this->assertInternalType('array', $ret);
+        $this->assertIsArray($ret);
 
         foreach ($ret as $version => $tmp) {
             $this->assertRegExp('#^' . ROOT_TESTS . '/data/temp#', $tmp);

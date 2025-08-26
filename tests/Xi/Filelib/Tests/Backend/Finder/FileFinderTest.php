@@ -7,7 +7,7 @@ use Xi\Filelib\Backend\Finder\FileFinder;
 
 class FileFinderTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->finder = new FileFinder();
     }

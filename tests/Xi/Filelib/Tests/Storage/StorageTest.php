@@ -25,7 +25,7 @@ class StorageTest extends \Xi\Filelib\Tests\TestCase
     private $exception;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $adapter;
 
@@ -34,16 +34,16 @@ class StorageTest extends \Xi\Filelib\Tests\TestCase
     private $version;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $ed;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $cache;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->adapter = $this->getMockedStorageAdapter();
 
@@ -83,10 +83,13 @@ class StorageTest extends \Xi\Filelib\Tests\TestCase
             $this->getMockedStorageAdapter()
         );
 
-        $this->assertAttributeInstanceOf(
+        $reflection = new \ReflectionObject($storage);
+        $property = $reflection->getProperty('cache');
+        $property->setAccessible(true);
+
+        $this->assertInstanceOf(
             'Xi\Filelib\Storage\RetrievedCache',
-            'cache',
-            $storage
+            $property->getValue($storage)
         );
     }
 

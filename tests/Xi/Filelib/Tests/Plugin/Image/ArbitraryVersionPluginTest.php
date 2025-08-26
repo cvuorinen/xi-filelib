@@ -28,10 +28,10 @@ class ArbitraryVersionPluginTest extends TestCase
      */
     private $storage;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists('Imagick')) {
-            return $this->markTestSkipped('Imagick required');
+            $this->markTestSkipped('Imagick required');
         }
 
         parent::setUp();

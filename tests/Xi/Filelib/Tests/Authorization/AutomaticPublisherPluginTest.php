@@ -13,7 +13,7 @@ use Xi\Filelib\Resource\Resource;
 class AutomaticPublisherPluginTest extends \Xi\Filelib\Tests\TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $publisher;
 
@@ -25,11 +25,11 @@ class AutomaticPublisherPluginTest extends \Xi\Filelib\Tests\TestCase
     private $file;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $adapter;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->publisher = $this->getMockedPublisher();
         $this->adapter = $this->createMock('Xi\Filelib\Authorization\AuthorizationAdapter');

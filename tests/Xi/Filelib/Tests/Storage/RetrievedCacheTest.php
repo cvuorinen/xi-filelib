@@ -26,7 +26,7 @@ class RetrievedCacheTest extends TestCase
      */
     private $retrieved2;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->cache = new RetrievedCache();
         $this->retrieved = new Retrieved('lussogrande', false);

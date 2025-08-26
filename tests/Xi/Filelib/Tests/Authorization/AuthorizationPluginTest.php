@@ -22,7 +22,7 @@ class AuthorizationPluginTest extends TestCase
 
     private $ed;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->adapter = $this->createMock('Xi\Filelib\Authorization\AuthorizationAdapter');
         $this->ed = $this->getMockedEventDispatcher();

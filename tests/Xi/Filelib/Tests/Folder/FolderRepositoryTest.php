@@ -27,7 +27,7 @@ class FolderRepositoryTest extends \Xi\Filelib\Tests\TestCase
      */
     private $op;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->ed = $this->prophesize('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $this->ed->dispatch(Argument::cetera())->will(function ($args) { return $args[0]; });

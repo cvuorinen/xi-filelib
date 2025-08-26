@@ -22,10 +22,10 @@ class MemcachedCacheAdapterTest extends TestCase
      */
     private $cache;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists('Memcached')) {
-            return $this->markTestSkipped('Memcached not installed');
+            $this->markTestSkipped('Memcached not installed');
         }
 
         $this->memcached = new Memcached();
@@ -33,7 +33,7 @@ class MemcachedCacheAdapterTest extends TestCase
         $this->cache = new MemcachedCacheAdapter($this->memcached, 'test___');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->memcached->flush();
     }

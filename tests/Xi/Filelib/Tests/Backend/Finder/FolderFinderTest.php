@@ -6,7 +6,7 @@ use Xi\Filelib\Backend\Finder\FolderFinder;
 
 class FolderFinderTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->finder = new FolderFinder();
     }

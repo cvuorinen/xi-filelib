@@ -11,7 +11,7 @@ use Xi\Filelib\Events;
 class ProfileManagerTest extends \Xi\Filelib\Tests\TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $ed;
 
@@ -20,7 +20,7 @@ class ProfileManagerTest extends \Xi\Filelib\Tests\TestCase
      */
     private $manager;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->ed = $this->getMockedEventDispatcher();
 

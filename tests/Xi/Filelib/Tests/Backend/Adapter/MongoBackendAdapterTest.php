@@ -27,7 +27,7 @@ class MongoBackendAdapterTest extends AbstractBackendAdapterTestCase
     public function assertValidCreatedIdentifier($identifier)
     {
         $this->assertNotNull($identifier);
-        $this->assertInternalType('string', $identifier);
+        $this->assertIsString($identifier);
     }
 
     /**
@@ -61,7 +61,7 @@ class MongoBackendAdapterTest extends AbstractBackendAdapterTestCase
         return new MongoBackendAdapter($this->mongo);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         if (extension_loaded('mongodb') && $this->mongo) {
             foreach ($this->mongo->listCollections() as $collection) {
