@@ -15,6 +15,10 @@ class FilelibMessageHandlerTest extends TestCase
      */
     public function handles()
     {
+        if (!class_exists('Pekkis\Queue\Message')) {
+            $this->markTestSkipped('Pekkis\Queue\Message class could not be loaded');
+        }
+
         $data = new SerializedCallback('\touchMyTrallala', ['xooxer']);
         $message = Message::create('xoo.lus', $data);
 

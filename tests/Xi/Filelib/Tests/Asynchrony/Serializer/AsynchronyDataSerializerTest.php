@@ -17,6 +17,10 @@ class AsynchronyDataSerializerTest extends TestCase
      */
     public function serializesAndUnserializesUpload()
     {
+        if (!class_exists('Pekkis\Queue\Data\AbstractDataSerializer')) {
+            $this->markTestSkipped('Pekkis\Queue\Data\AbstractDataSerializer class could not be loaded');
+        }
+
         $filelib = new FileLibrary(
             new MemoryStorageAdapter(),
             new MemoryBackendAdapter()
@@ -42,6 +46,10 @@ class AsynchronyDataSerializerTest extends TestCase
      */
     public function serializesAndUnserializesAfterUpload()
     {
+        if (!class_exists('Pekkis\Queue\Data\AbstractDataSerializer')) {
+            $this->markTestSkipped('Pekkis\Queue\Data\AbstractDataSerializer class could not be loaded');
+        }
+
         $filelib = new FileLibrary(
             new MemoryStorageAdapter(),
             new MemoryBackendAdapter()

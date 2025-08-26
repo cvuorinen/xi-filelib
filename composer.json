@@ -24,13 +24,10 @@
         "symfony/event-dispatcher": "~5.0",
         "ramsey/uuid": "~3.8",
         "cocur/slugify": "~3.1",
-        "pekkis/queue": "~4.0",
         "pekkis/temporary-file-manager": "~2.0",
         "pekkis/directory-calculator": "~2.0",
         "pekkis/mime-types": "~2.0",
-        "xi/collections": "0.3.*",
-        "zencoder/zencoder-php": "~2.1",
-        "aws/aws-sdk-php": "~3.2"
+        "xi/collections": "0.3.*"
     },
 
     "require-dev": {
@@ -52,7 +49,10 @@
         "ext-mongo": "For MongoDB backend and GridFS storage",
         "doctrine/dbal": "For Doctrine DBAL backend",
         "doctrine/orm": "For Doctrine ORM backend",
-        "knplabs/gaufrette": "For Gaufrette support"
+        "knplabs/gaufrette": "For Gaufrette support",
+        "pekkis/queue": "For async support",
+        "zencoder/zencoder-php": "For AWS S3 support",
+        "aws/aws-sdk-php": "For AWS S3 support"
     },
 
     "autoload": {

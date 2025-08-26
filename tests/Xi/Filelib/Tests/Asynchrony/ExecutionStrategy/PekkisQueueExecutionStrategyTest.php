@@ -27,6 +27,10 @@ class PekkisQueueExecutionStrategyTest extends \Xi\Filelib\Tests\TestCase
 
     public function setUp()
     {
+        if (!class_exists('Pekkis\Queue\Queue')) {
+            $this->markTestSkipped('Pekkis\Queue\Queue class could not be loaded');
+        }
+
         if (!getenv("RABBITMQ_HOST")) {
             return $this->markTestSkipped('RabbitMQ not configured');
         }
