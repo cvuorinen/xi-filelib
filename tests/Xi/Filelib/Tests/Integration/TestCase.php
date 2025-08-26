@@ -101,12 +101,6 @@ class TestCase extends \Xi\Filelib\Tests\TestCase
             $ed
         );
 
-        $memcached = new Memcached();
-        $memcached->addServer('localhost', 11211);
-
-        $this->memcached = $memcached;
-        $this->memcached->flush();
-
         $filelib->addPlugin(new RandomizeNamePlugin());
 
         $authorizationAdapter = new SimpleAuthorizationAdapter();
@@ -182,9 +176,11 @@ class TestCase extends \Xi\Filelib\Tests\TestCase
             }
         }
 
+        $this->conn->exec("/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;");
         $this->conn->exec("DELETE FROM xi_filelib_file");
         $this->conn->exec("DELETE FROM xi_filelib_resource");
         $this->conn->exec("DELETE FROM xi_filelib_folder");
+        $this->conn->exec("/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;");
 
         /*
         $this->mongo->selectCollection('resources')->drop();
@@ -227,8 +223,16 @@ class TestCase extends \Xi\Filelib\Tests\TestCase
     protected function setupCache($enabled)
     {
         if ($enabled) {
+            if (!class_exists('Memcached')) {
+                $this->markTestSkipped('Memcached not installed');
+            }
+
+            $memcached = new Memcached();
+            $memcached->addServer('localhost', 11211);
+            $memcached->flush();
+
             $this->filelib->createCacheFromAdapter(
-                new MemcachedCacheAdapter($this->memcached)
+                new MemcachedCacheAdapter($memcached)
             );
         }
     }
