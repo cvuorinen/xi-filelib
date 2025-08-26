@@ -163,6 +163,6 @@ class SymlinkFilesystemPublisherAdapterTest extends TestCase
 
         $publisher->unpublishVersion($file, Version::get('original'));
 
-        $this->assertFileNotExists($path);
+        $this->assertFileDoesNotExist($path);
     }
 }

@@ -2,6 +2,9 @@
 
 namespace Xi\Filelib\Tests\Renderer;
 
+use Prophecy\Argument;
+use Prophecy\Prophecy\ObjectProphecy;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Xi\Filelib\InvalidVersionException;
 use Xi\Filelib\RuntimeException;
 use Xi\Filelib\Version;
@@ -40,7 +43,7 @@ abstract class RendererTestCase extends \Xi\Filelib\Tests\TestCase
     protected $renderer;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var ObjectProphecy<EventDispatcherInterface>
      */
     protected $ed;
 
@@ -50,7 +53,7 @@ abstract class RendererTestCase extends \Xi\Filelib\Tests\TestCase
 
     public function setUp(): void
     {
-        $this->ed = $this->getMockedEventDispatcher();
+        $this->ed = $this->getProphesizedEventDispatcher();
         $this->fiop = $this->getMockedFileRepository();
         $this->storage = $this->getMockedStorage();
         $this->pm = $this->getMockedProfileManager();
@@ -59,7 +62,7 @@ abstract class RendererTestCase extends \Xi\Filelib\Tests\TestCase
             $this->fiop,
             null,
             $this->storage,
-            $this->ed,
+            $this->ed->reveal(),
             null,
             null,
             null,
@@ -109,15 +112,13 @@ abstract class RendererTestCase extends \Xi\Filelib\Tests\TestCase
             ->will($this->returnValue($file));
 
         $this->ed
-            ->expects($this->at(0))
-            ->method('dispatch')
-            ->with($this->isInstanceOf('Xi\Filelib\Event\FileEvent'), Events::RENDERER_BEFORE_RENDER)
-            ->will($this->throwException(new AccessDeniedException('Game over man, game over')));
+            ->dispatch(Argument::type('Xi\Filelib\Event\FileEvent'), Events::RENDERER_BEFORE_RENDER)
+            ->willThrow(new AccessDeniedException('Game over man, game over'))
+            ->shouldBeCalled();
 
         $this->ed
-            ->expects($this->at(1))
-            ->method('dispatch')
-            ->with($this->isInstanceOf('Xi\Filelib\Event\RenderEvent'), Events::RENDERER_RENDER);
+            ->dispatch(Argument::type('Xi\Filelib\Event\RenderEvent'), Events::RENDERER_RENDER)
+            ->shouldBeCalled();
 
         $ret = $this->renderer->render('xooxoo', 'xooxer');
 
@@ -163,14 +164,12 @@ abstract class RendererTestCase extends \Xi\Filelib\Tests\TestCase
         }
 
         $this->ed
-            ->expects($this->at(0))
-            ->method('dispatch')
-            ->with($this->isInstanceOf('Xi\Filelib\Event\FileEvent'), Events::RENDERER_BEFORE_RENDER);
+            ->dispatch(Argument::type('Xi\Filelib\Event\FileEvent'), Events::RENDERER_BEFORE_RENDER)
+            ->shouldBeCalled();
 
         $this->ed
-            ->expects($this->at(1))
-            ->method('dispatch')
-            ->with($this->isInstanceOf('Xi\Filelib\Event\RenderEvent'), Events::RENDERER_RENDER);
+            ->dispatch(Argument::type('Xi\Filelib\Event\RenderEvent'), Events::RENDERER_RENDER)
+            ->shouldBeCalled();
 
         $this->storage
             ->expects($this->once())

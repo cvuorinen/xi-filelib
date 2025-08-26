@@ -141,7 +141,7 @@ class VersionPluginTest extends TestCase
         $this->assertIsArray($ret);
 
         foreach ($ret as $version => $tmp) {
-            $this->assertRegExp('#^' . ROOT_TESTS . '/data/temp#', $tmp);
+            $this->assertMatchesRegularExpression('#^' . ROOT_TESTS . '/data/temp#', $tmp);
         }
     }
 

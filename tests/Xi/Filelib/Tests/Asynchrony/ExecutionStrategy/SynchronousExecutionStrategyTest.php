@@ -24,7 +24,7 @@ class SynchronousExecutionStrategyTest extends \Xi\Filelib\Tests\TestCase
      */
     public function executes()
     {
-        $this->assertFileNotExists(ROOT_TESTS . '/data/temp/ping.txt');
+        $this->assertFileDoesNotExist(ROOT_TESTS . '/data/temp/ping.txt');
         $strategy = new SynchronousExecutionStrategy();
         $strategy->execute('\touchMyTrallala', [6]);
         $this->assertFileExists(ROOT_TESTS . '/data/temp/ping.txt');

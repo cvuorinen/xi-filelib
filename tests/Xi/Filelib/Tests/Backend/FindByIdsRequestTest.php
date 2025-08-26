@@ -24,9 +24,6 @@ class FindByIdsRequestTest extends TestCase
         $this->assertFalse($request->isFulfilled());
     }
 
-    /**
-     * @test
-     */
     public function provideOriginModes()
     {
         return array(

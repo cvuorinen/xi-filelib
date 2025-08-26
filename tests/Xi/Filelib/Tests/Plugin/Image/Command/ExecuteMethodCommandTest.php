@@ -62,13 +62,13 @@ class ExecuteMethodCommandTest extends TestCase
      */
     public function executeShouldExecuteImagemagicksMethodWhenMethodIsCallable()
     {
-        $command = new ExecuteMethodCommand('cropThumbnailImage', array('sometimes', 'a banana'));
+        $command = new ExecuteMethodCommand('cropThumbnailImage', array(123, 456));
 
         $imagick = $this->getMockedImagick();
 
         $imagick->expects($this->once())
                 ->method('cropThumbnailImage')
-                ->with('sometimes', 'a banana');
+                ->with(123, 456);
 
         $command->execute($imagick);
     }

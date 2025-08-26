@@ -22,7 +22,7 @@ class FilelibMessageHandlerTest extends TestCase
         $data = new SerializedCallback('\touchMyTrallala', ['xooxer']);
         $message = Message::create('xoo.lus', $data);
 
-        $this->assertFileNotExists(ROOT_TESTS . '/data/temp/ping.txt');
+        $this->assertFileDoesNotExist(ROOT_TESTS . '/data/temp/ping.txt');
 
         $handler = new FilelibMessageHandler();
 

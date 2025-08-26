@@ -111,7 +111,7 @@ class CopyFilesystemPublisherAdapterTest extends TestCase
         $this->assertFalse(is_link($path));
 
         $publisher->unpublishVersion($file, Version::get('original'));
-        $this->assertFileNotExists($path);
+        $this->assertFileDoesNotExist($path);
     }
 
 

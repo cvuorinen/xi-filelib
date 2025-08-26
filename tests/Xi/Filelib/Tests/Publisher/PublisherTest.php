@@ -2,9 +2,13 @@
 
 namespace Xi\Filelib\Tests\Publisher;
 
+use Prophecy\Argument;
+use Prophecy\Prophecy\ObjectProphecy;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Xi\Filelib\Event\FileCopyEvent;
 use Xi\Filelib\Event\FileEvent;
 use Xi\Filelib\File\File;
+use Xi\Filelib\Publisher\PublisherAdapter;
 use Xi\Filelib\RuntimeException;
 use Xi\Filelib\Version;
 use Xi\Filelib\Publisher\Publisher;
@@ -20,7 +24,7 @@ class PublisherTest extends TestCase
     private $fiop;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var ObjectProphecy<PublisherAdapter>
      */
     private $adapter;
 
@@ -30,7 +34,7 @@ class PublisherTest extends TestCase
     private $linker;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var ObjectProphecy<EventDispatcherInterface>
      */
     private $ed;
 
@@ -77,15 +81,16 @@ class PublisherTest extends TestCase
             ->with($this->isInstanceOf('Xi\Filelib\File\File'), $this->logicalOr(Version::get('ankan'), Version::get('imaisu')))
             ->will($this->returnValue($this->provider));
 
-        $this->ed = $this->getMockedEventDispatcher();
+        $this->ed = $this->getProphesizedEventDispatcher();
 
-        $filelib = $this->getMockedFilelib(null, $this->fiop, null, null, $this->ed, null, null, null, $this->pm);
+        $filelib = $this->getMockedFilelib(null, $this->fiop, null, null, $this->ed->reveal(), null, null, null, $this->pm);
 
 
-        $this->adapter = $this->getMockedPublisherAdapter();
+        $this->adapter = $this->prophesize(PublisherAdapter::class);
+        $this->adapter->attachTo(Argument::cetera())->willReturn(null);
         $this->linker = $this->getMockedLinker();
 
-        $this->publisher = new Publisher($this->adapter, $this->linker);
+        $this->publisher = new Publisher($this->adapter->reveal(), $this->linker);
         $this->publisher->attachTo($filelib);
     }
 
@@ -95,7 +100,7 @@ class PublisherTest extends TestCase
     public function adapterResolves()
     {
         $this->assertInstanceOf('Xi\Filelib\Tool\LazyReferenceResolver', $this->publisher->getAdapter());
-        $this->assertSame($this->adapter, $this->publisher->getAdapter()->resolve());
+        $this->assertSame($this->adapter->reveal(), $this->publisher->getAdapter()->resolve());
     }
 
     /**
@@ -197,9 +202,6 @@ class PublisherTest extends TestCase
         $this->assertClassExists('Xi\Filelib\Publisher\Publisher');
     }
 
-    /**
-     * @test
-     */
     public function provideVersions()
     {
         return array(
@@ -261,15 +263,13 @@ class PublisherTest extends TestCase
         $file = File::create();
 
         $this->adapter
-            ->expects($this->once())
-            ->method('getUrl')
-            ->with(
+            ->getUrl(
                 $file,
                 Version::get('ankan'),
                 $this->provider,
                 $this->linker
             )
-            ->will($this->returnValue('lussutusbansku'));
+            ->willReturn('lussutusbansku');
 
         $ret = $this->publisher->getUrl($file, $version);
         $this->assertEquals('lussutusbansku', $ret);
@@ -291,8 +291,8 @@ class PublisherTest extends TestCase
         );
 
         $this->adapter
-            ->expects($this->never())
-            ->method('getUrl');
+            ->getUrl(Argument::cetera())
+            ->shouldNotBeCalled();
 
         $this->fiop
             ->expects($this->never())
@@ -323,62 +323,52 @@ class PublisherTest extends TestCase
         $this->fiop->expects($this->once())->method('update')->with($file);
 
         $this->ed
-            ->expects($this->at(0))
-            ->method('dispatch')
-            ->with(
-                $this->isInstanceOf('Xi\Filelib\Event\PublisherEvent'),
+            ->dispatch(
+                Argument::type('Xi\Filelib\Event\PublisherEvent'),
                 Events::FILE_BEFORE_PUBLISH
-            );
+            )->shouldBeCalled();
 
         $this->adapter
-            ->expects($this->at(1))
-            ->method('publish')
-            ->with(
+            ->publish(
                 $file,
                 $version1,
                 $this->provider,
                 $this->linker
-            );
+            )->shouldBeCalled();
 
         $this->adapter
-            ->expects($this->at(2))
-            ->method('getUrl')
-            ->with(
+            ->getUrl(
                 $file,
                 $version1,
                 $this->provider,
                 $this->linker
             )
-            ->will($this->returnValue('tenhusen-suuruuden-ylistyksen-url'));
+            ->willReturn('tenhusen-suuruuden-ylistyksen-url')
+            ->shouldBeCalled();
 
         $this->adapter
-            ->expects($this->at(3))
-            ->method('publish')
-            ->with(
+            ->publish(
                 $file,
                 $version2,
                 $this->provider,
                 $this->linker
-            );
+            )->shouldBeCalled();
 
         $this->adapter
-            ->expects($this->at(4))
-            ->method('getUrl')
-            ->with(
+            ->getUrl(
                 $file,
                 $version2,
                 $this->provider,
                 $this->linker
             )
-            ->will($this->returnValue('tenhusen-ylistyksen-suuruuden-url'));
+            ->willReturn('tenhusen-ylistyksen-suuruuden-url')
+            ->shouldBeCalled();
 
         $this->ed
-            ->expects($this->at(1))
-            ->method('dispatch')
-            ->with(
-                $this->isInstanceOf('Xi\Filelib\Event\PublisherEvent'),
+            ->dispatch(
+                Argument::type('Xi\Filelib\Event\PublisherEvent'),
                Events::FILE_AFTER_PUBLISH
-            );
+            )->shouldBeCalled();
 
         $this->publisher->publishAllVersions($file);
 
@@ -415,35 +405,29 @@ class PublisherTest extends TestCase
         $this->fiop->expects($this->once())->method('update')->with($file);
 
         $this->ed
-            ->expects($this->at(0))
-            ->method('dispatch')
-            ->with($this->isInstanceOf('Xi\Filelib\Event\PublisherEvent'), Events::FILE_BEFORE_UNPUBLISH);
+            ->dispatch(Argument::type('Xi\Filelib\Event\PublisherEvent'), Events::FILE_BEFORE_UNPUBLISH)
+            ->shouldBeCalled();
 
         $this->adapter
-            ->expects($this->at(1))
-            ->method('unpublish')
-            ->with(
+            ->unpublish(
                 $file,
                 $version1,
                 $this->provider,
                 $this->linker
-            );
+            )->shouldBeCalled();
 
         $this->adapter
-            ->expects($this->at(2))
-            ->method('unpublish')
-            ->with(
+            ->unpublish(
                 $file,
                 $version2,
                 $this->provider,
                 $this->linker
-            );
+            )->shouldBeCalled();
 
 
         $this->ed
-            ->expects($this->at(1))
-            ->method('dispatch')
-            ->with($this->isInstanceOf('Xi\Filelib\Event\PublisherEvent'), Events::FILE_AFTER_UNPUBLISH);
+            ->dispatch(Argument::type('Xi\Filelib\Event\PublisherEvent'), Events::FILE_AFTER_UNPUBLISH)
+            ->shouldBeCalled();
 
         $this->publisher->unpublishAllVersions($file);
 
@@ -464,7 +448,7 @@ class PublisherTest extends TestCase
             ->with('lussogrande-loso.lus')
             ->will($this->returnValue(array(File::create(), 'loso')));
 
-        $publisher = new Publisher($this->adapter, $linker);
+        $publisher = new Publisher($this->adapter->reveal(), $linker);
 
         list ($file, $version) = $publisher->reverseUrl('lussogrande-loso.lus');
 
@@ -481,7 +465,7 @@ class PublisherTest extends TestCase
         $this->expectException('Xi\Filelib\RuntimeException');
 
         $linker = $this->getMockedLinker();
-        $publisher = new Publisher($this->adapter, $linker);
+        $publisher = new Publisher($this->adapter->reveal(), $linker);
 
         $publisher->reverseUrl('lussogrande-loso.lus');
     }
@@ -495,14 +479,19 @@ class PublisherTest extends TestCase
         $version = Version::get('ankan');
 
         $this->adapter
-            ->expects($this->at(1))
-            ->method('publish')
-            ->with(
+            ->publish(
                 $file,
                 $version,
                 $this->provider,
                 $this->linker
-            );
+            )->shouldBeCalled();
+        $this->adapter
+            ->getUrl(
+                $file,
+                $version,
+                $this->provider,
+                $this->linker
+            )->shouldBeCalled();
 
         $this->fiop
             ->expects($this->once())
@@ -512,8 +501,8 @@ class PublisherTest extends TestCase
             );
 
         $this->ed
-            ->expects($this->exactly(2))
-            ->method('dispatch');
+            ->dispatch(Argument::cetera())
+            ->shouldBeCalledTimes(2);
 
         $ret = $this->publisher->publishVersion($file, $version);
         $this->assertTrue($ret);
@@ -528,23 +517,22 @@ class PublisherTest extends TestCase
         $version = Version::get('ankan');
 
         $this->adapter
-            ->expects($this->at(1))
-            ->method('publish')
-            ->with(
+            ->publish(
                 $file,
                 $version,
                 $this->provider,
                 $this->linker
             )
-            ->will($this->throwException(new RuntimeException()));
+            ->willThrow(new RuntimeException())
+            ->shouldBeCalled();
 
         $this->fiop
             ->expects($this->never())
             ->method('update');
 
         $this->ed
-            ->expects($this->exactly(1))
-            ->method('dispatch');
+            ->dispatch(Argument::cetera())
+            ->shouldBeCalledTimes(1);
 
         $ret = $this->publisher->publishVersion($file, $version);
         $this->assertFalse($ret);
@@ -559,14 +547,12 @@ class PublisherTest extends TestCase
         $version = Version::get('ankan');
 
         $this->adapter
-            ->expects($this->at(1))
-            ->method('unpublish')
-            ->with(
+            ->unpublish(
                 $file,
                 $version,
                 $this->provider,
                 $this->linker
-            );
+            )->shouldBeCalled();
 
         $this->fiop
             ->expects($this->once())
@@ -576,8 +562,8 @@ class PublisherTest extends TestCase
             );
 
         $this->ed
-            ->expects($this->exactly(2))
-            ->method('dispatch');
+            ->dispatch(Argument::cetera())
+            ->shouldBeCalledTimes(2);
 
         $ret = $this->publisher->unpublishVersion($file, $version);
         $this->assertTrue($ret);
@@ -592,23 +578,22 @@ class PublisherTest extends TestCase
         $version = Version::get('ankan');
 
         $this->adapter
-            ->expects($this->at(1))
-            ->method('unpublish')
-            ->with(
+            ->unpublish(
                 $file,
                 $version,
                 $this->provider,
                 $this->linker
             )
-            ->will($this->throwException(new RuntimeException()));
+            ->willThrow(new RuntimeException())
+            ->shouldBeCalled();
 
         $this->fiop
             ->expects($this->never())
             ->method('update');
 
         $this->ed
-            ->expects($this->exactly(1))
-            ->method('dispatch');
+            ->dispatch(Argument::cetera())
+            ->shouldBeCalledTimes(1);
 
         $ret = $this->publisher->unpublishVersion($file, $version);
         $this->assertFalse($ret);

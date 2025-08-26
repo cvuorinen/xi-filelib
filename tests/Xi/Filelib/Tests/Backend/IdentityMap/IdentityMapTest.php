@@ -2,6 +2,9 @@
 
 namespace Xi\Filelib\Tests\Backend\IdentityMap;
 
+use Prophecy\Argument;
+use Prophecy\Prophecy\ObjectProphecy;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Xi\Filelib\Backend\FindByIdsRequest;
 use Xi\Filelib\Tests\TestCase;
 use Xi\Filelib\Backend\IdentityMap\IdentityMap;
@@ -22,14 +25,14 @@ class IdentityMapTest extends TestCase
     protected $im;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var ObjectProphecy<EventDispatcherInterface>
      */
     protected $ed;
 
     public function setUp(): void
     {
-        $this->ed = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $this->im = new IdentityMap($this->ed);
+        $this->ed = $this->getProphesizedEventDispatcher();
+        $this->im = new IdentityMap($this->ed->reveal());
     }
 
     /**
@@ -38,12 +41,11 @@ class IdentityMapTest extends TestCase
     public function constructorSubscribesToEvents()
     {
         $this->ed
-            ->expects($this->once())->method('addSubscriber')
-            ->with(
-                $this->isInstanceOf('Xi\Filelib\Backend\IdentityMap\IdentityMap')
-            );
+            ->addSubscriber(
+                Argument::type('Xi\Filelib\Backend\IdentityMap\IdentityMap')
+            )->shouldBeCalled();
 
-        $im = new IdentityMap($this->ed);
+        $im = new IdentityMap($this->ed->reveal());
     }
 
     /**
@@ -51,7 +53,7 @@ class IdentityMapTest extends TestCase
      */
     public function getEventDispatcherReturnsEventDispatcher()
     {
-        $this->assertSame($this->ed, $this->im->getEventDispatcher());
+        $this->assertSame($this->ed->reveal(), $this->im->getEventDispatcher());
     }
 
     /**
@@ -165,8 +167,8 @@ class IdentityMapTest extends TestCase
     {
         $this->expectException('Xi\Filelib\Backend\IdentityMap\IdentityMapException');
         $this->ed
-            ->expects($this->never())
-            ->method('dispatch');
+            ->dispatch(Argument::cetera())
+            ->shouldNotBeCalled();
 
         $this->im->add(File::create());
     }
@@ -178,8 +180,8 @@ class IdentityMapTest extends TestCase
     public function addingAnAlreadyExistingObjectShouldReturnFalse(Identifiable $object)
     {
         $this->ed
-            ->expects($this->exactly(2))
-            ->method('dispatch');
+            ->dispatch(Argument::cetera())
+            ->shouldBeCalledTimes(2);
 
         $this->assertFalse($this->im->has($object));
         $ret = $this->im->add($object);
@@ -268,20 +270,16 @@ class IdentityMapTest extends TestCase
     public function getShouldReturnSameInstanceWhenObjectIsFound(Identifiable $object)
     {
         $this->ed
-            ->expects($this->at(0))
-            ->method('dispatch')
-            ->with(
-                $this->isInstanceOf('Xi\Filelib\Event\IdentifiableEvent'),
+            ->dispatch(
+                Argument::type('Xi\Filelib\Event\IdentifiableEvent'),
                 Events::IDENTITYMAP_BEFORE_ADD
-            );
+            )->shouldBeCalled();
 
         $this->ed
-            ->expects($this->at(1))
-            ->method('dispatch')
-            ->with(
-                $this->isInstanceOf('Xi\Filelib\Event\IdentifiableEvent'),
+            ->dispatch(
+                Argument::type('Xi\Filelib\Event\IdentifiableEvent'),
                 Events::IDENTITYMAP_AFTER_ADD
-            );
+            )->shouldBeCalled();
 
         $this->im->add($object);
         $this->assertSame($object, $this->im->get($object->getId(), get_class($object)));
@@ -294,20 +292,16 @@ class IdentityMapTest extends TestCase
     public function removeShouldRemoveObject(Identifiable $object)
     {
         $this->ed
-            ->expects($this->at(2))
-            ->method('dispatch')
-            ->with(
-                $this->isInstanceOf('Xi\Filelib\Event\IdentifiableEvent'),
+            ->dispatch(
+                Argument::type('Xi\Filelib\Event\IdentifiableEvent'),
                 Events::IDENTITYMAP_BEFORE_REMOVE
-            );
+            )->shouldBeCalled();
 
         $this->ed
-            ->expects($this->at(3))
-            ->method('dispatch')
-            ->with(
-                $this->isInstanceOf('Xi\Filelib\Event\IdentifiableEvent'),
+            ->dispatch(
+                Argument::type('Xi\Filelib\Event\IdentifiableEvent'),
                 Events::IDENTITYMAP_AFTER_REMOVE
-            );
+            )->shouldBeCalled();
 
         $this->im->add($object);
         $this->assertTrue($this->im->has($object));

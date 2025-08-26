@@ -121,7 +121,7 @@ class OriginalVersionPluginTest extends TestCase
         $this->assertCount(1, $ret);
         $this->assertArrayHasKey('original', $ret);
         foreach ($ret as $tmp) {
-            $this->assertRegExp('#^' . ROOT_TESTS . '/data/temp#', $tmp);
+            $this->assertMatchesRegularExpression('#^' . ROOT_TESTS . '/data/temp#', $tmp);
         }
     }
 

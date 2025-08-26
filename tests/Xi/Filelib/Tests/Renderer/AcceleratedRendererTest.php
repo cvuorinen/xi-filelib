@@ -2,6 +2,7 @@
 
 namespace Xi\Filelib\Tests\Renderer;
 
+use Prophecy\Argument;
 use Xi\Filelib\Renderer\AcceleratedRenderer;
 use Xi\Filelib\File\File;
 use Xi\Filelib\Renderer\Events;
@@ -46,12 +47,11 @@ class AcceleratedRendererTest extends RendererTestCase
         )->addVersion(Version::get('xooxer'));
 
         $this->ed
-            ->expects($this->at(0))
-            ->method('dispatch')
-            ->with(
-                $this->isInstanceOf('Xi\Filelib\Event\FileEvent'),
+            ->dispatch(
+                Argument::type('Xi\Filelib\Event\FileEvent'),
                 Events::RENDERER_BEFORE_RENDER
-            );
+            )
+            ->shouldBeCalled();
 
         $this->storage
             ->expects($this->once())
@@ -150,12 +150,11 @@ class AcceleratedRendererTest extends RendererTestCase
             ->will($this->returnValue($serverSignature));
 
         $this->ed
-            ->expects($this->at(0))
-            ->method('dispatch')
-            ->with(
-                $this->isInstanceOf('Xi\Filelib\Event\FileEvent'),
+            ->dispatch(
+                Argument::type('Xi\Filelib\Event\FileEvent'),
                 Events::RENDERER_BEFORE_RENDER
-            );
+            )
+            ->shouldBeCalled();
 
         $this->storage
             ->expects($this->once())

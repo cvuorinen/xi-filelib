@@ -341,13 +341,13 @@ class StorageTest extends \Xi\Filelib\Tests\TestCase
             ->will($this->returnValue(true));
 
         $this->cache
-            ->expects($this->at(0))
+            ->expects($this->once())
             ->method('get')
             ->with($resource)
             ->will($this->returnValue(false));
 
         $this->cache
-            ->expects($this->at(1))
+            ->expects($this->once())
             ->method('set')
             ->with($resource, $retrieved);
 
@@ -371,7 +371,7 @@ class StorageTest extends \Xi\Filelib\Tests\TestCase
             ->method('exists');
 
         $this->cache
-            ->expects($this->at(0))
+            ->expects($this->once())
             ->method('get')
             ->with($resource)
             ->will($this->returnValue($retrieved));
@@ -436,13 +436,13 @@ class StorageTest extends \Xi\Filelib\Tests\TestCase
             ->will($this->returnValue(true));
 
         $this->cache
-            ->expects($this->at(0))
+            ->expects($this->once())
             ->method('getVersion')
             ->with($resource, $version)
             ->will($this->returnValue(false));
 
         $this->cache
-            ->expects($this->at(1))
+            ->expects($this->once())
             ->method('setVersion')
             ->with($resource, $version, $retrieved);
 
@@ -467,7 +467,7 @@ class StorageTest extends \Xi\Filelib\Tests\TestCase
             ->method('versionExists');
 
         $this->cache
-            ->expects($this->at(0))
+            ->expects($this->once())
             ->method('getVersion')
             ->with($resource, $version)
             ->will($this->returnValue($retrieved));

@@ -308,8 +308,8 @@ class VersionProviderTest extends TestCase
 
         $this->plugin->onAfterUpload($event);
 
-        $this->assertFileNotExists(ROOT_TESTS . '/data/temp/life-is-my-enemy-xooxer.jpg');
-        $this->assertFileNotExists(ROOT_TESTS . '/data/temp/life-is-my-enemy-losobees.jpg');
+        $this->assertFileDoesNotExist(ROOT_TESTS . '/data/temp/life-is-my-enemy-xooxer.jpg');
+        $this->assertFileDoesNotExist(ROOT_TESTS . '/data/temp/life-is-my-enemy-losobees.jpg');
     }
 
     /**
@@ -532,9 +532,6 @@ class VersionProviderTest extends TestCase
         $this->assertSame($expected, $mimeType);
     }
 
-    /**
-     * @test
-     */
     public function provideReplacables()
     {
         return array(
@@ -640,7 +637,7 @@ class VersionProviderTest extends TestCase
             Version::get('tooxer')
         );
 
-        $this->assertFileNotExists(
+        $this->assertFileDoesNotExist(
             ROOT_TESTS . '/data/temp/temporary-manatee.jpg'
         );
     }
@@ -725,11 +722,11 @@ class VersionProviderTest extends TestCase
             $file
         );
 
-        $this->assertFileNotExists(
+        $this->assertFileDoesNotExist(
             ROOT_TESTS . '/data/temp/temporary-manatee.jpg'
         );
 
-        $this->assertFileNotExists(
+        $this->assertFileDoesNotExist(
             ROOT_TESTS . '/data/temp/temporary-manatee2.jpg'
         );
     }

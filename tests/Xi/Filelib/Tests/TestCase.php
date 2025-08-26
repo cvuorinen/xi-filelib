@@ -3,10 +3,15 @@
 namespace Xi\Filelib\Tests;
 
 use Pekkis\TemporaryFileManager\TemporaryFileManager;
+use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Xi\Filelib\Profile\FileProfile;
 
 class TestCase extends \PHPUnit\Framework\TestCase
 {
+    use ProphecyTrait;
 
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject
@@ -248,6 +253,15 @@ class TestCase extends \PHPUnit\Framework\TestCase
         return $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
     }
 
+    public function getProphesizedEventDispatcher(): ObjectProphecy
+    {
+        $ed = $this->prophesize(EventDispatcherInterface::class);
+        $ed->dispatch(Argument::cetera())->will(function ($args) { return $args[0]; });
+        $ed->addSubscriber(Argument::cetera())->willReturn(null);
+
+        return $ed;
+    }
+
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
@@ -460,7 +474,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
 
     public function assertUuid($what)
     {
-        $this->assertRegexp(
+        $this->assertMatchesRegularExpression(
             '/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})/',
             $what,
             "'{$what}' is not an UUID"

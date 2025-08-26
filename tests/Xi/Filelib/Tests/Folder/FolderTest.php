@@ -7,9 +7,6 @@ use Xi\Filelib\Tests\BaseIdentifiableTestCase;
 
 class FolderTest extends BaseIdentifiableTestCase
 {
-    /**
-     * @test
-     */
     public function getClassName()
     {
         return 'Xi\Filelib\Folder\Folder';

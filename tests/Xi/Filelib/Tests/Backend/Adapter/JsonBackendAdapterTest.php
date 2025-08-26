@@ -597,7 +597,7 @@ class JsonBackendAdapterTest extends AbstractBackendAdapterTestCase
         $path = ROOT_TESTS . '/data/temp/temp.json';
 
         $platform = new JsonBackendAdapter($path);
-        $this->assertFileNotExists($path);
+        $this->assertFileDoesNotExist($path);
 
         $platform->deleteFile(File::create(array('id' => 'xooxoo')));
 

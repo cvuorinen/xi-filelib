@@ -71,7 +71,7 @@ class PekkisQueueExecutionStrategyTest extends \Xi\Filelib\Tests\TestCase
      */
     public function failsToExecuteWhenNotAttached()
     {
-        $this->assertFileNotExists(ROOT_TESTS . '/data/temp/ping.txt');
+        $this->assertFileDoesNotExist(ROOT_TESTS . '/data/temp/ping.txt');
 
         $strategy = new PekkisQueueExecutionStrategy(
             $this->queue
@@ -92,7 +92,7 @@ class PekkisQueueExecutionStrategyTest extends \Xi\Filelib\Tests\TestCase
             new MemoryBackendAdapter()
         );
 
-        $this->assertFileNotExists(ROOT_TESTS . '/data/temp/ping.txt');
+        $this->assertFileDoesNotExist(ROOT_TESTS . '/data/temp/ping.txt');
 
         $strategy = new PekkisQueueExecutionStrategy(
             $this->queue
@@ -101,7 +101,7 @@ class PekkisQueueExecutionStrategyTest extends \Xi\Filelib\Tests\TestCase
 
         $strategy->execute('\touchMyTrallala', [6]);
 
-        $this->assertFileNotExists(ROOT_TESTS . '/data/temp/ping.txt');
+        $this->assertFileDoesNotExist(ROOT_TESTS . '/data/temp/ping.txt');
 
         $processor = new Processor(
             new EventDispatchingQueue($strategy->getQueue(), $filelib->getEventDispatcher())

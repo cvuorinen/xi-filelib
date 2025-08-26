@@ -268,12 +268,12 @@ class ZencoderPluginTest extends \Xi\Filelib\Tests\TestCase
         $this->plugin->setService($this->zencoderService);
 
         $this->amazonService
-            ->expects($this->at(0))
+            ->expects($this->once())
             ->method('putObject')
             ->with($this->isType('array'));
 
         $this->amazonService
-            ->expects($this->at(1))
+            ->expects($this->once())
             ->method('deleteObject')
             ->with($this->isType('array'));
 
@@ -379,7 +379,7 @@ class ZencoderPluginTest extends \Xi\Filelib\Tests\TestCase
             ));
 
         $this->amazonService
-            ->expects($this->at(0))
+            ->expects($this->once())
             ->method('putObject')
             ->with($this->isType('array'));
 
