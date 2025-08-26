@@ -2,10 +2,8 @@
 
 namespace Xi\Filelib\Tests\Backend\Adapter;
 
-use PDO;
-use PDOException;
+use Doctrine\DBAL\Connection;
 use Exception;
-use Xi\Filelib\Tests\PHPUnit\Extensions\Database\Operation\MySQL55Truncate;
 use Xi\Filelib\Backend\Finder\FileFinder;
 use Xi\Filelib\Backend\Finder\FolderFinder;
 use Xi\Filelib\Backend\Finder\ResourceFinder;
@@ -19,26 +17,20 @@ use Xi\Filelib\Backend\Finder\ResourceFinder;
 abstract class RelationalDbTestCase extends AbstractBackendAdapterTestCase
 {
     /**
-     * @var string|null
+     * @var Connection
      */
-    private $dataSet;
-
-    /**
-     * @var PHPUnit_Extensions_Database_DefaultTester
-     */
-    private $databaseTester;
+    protected $conn;
 
     /**
      * @throws Exception If no data set was used.
      */
     protected function tearDown()
     {
-        if ($this->databaseTester) {
-            $this->databaseTester->setTearDownOperation($this->getTearDownOperation());
-            $this->databaseTester->setDataSet($this->getDataSet($this->dataSet));
-            $this->databaseTester->onTearDown();
-            $this->databaseTester = null;
-        }
+        $this->conn->executeQuery("/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;");
+        $this->conn->executeQuery("DELETE FROM xi_filelib_file");
+        $this->conn->executeQuery("DELETE FROM xi_filelib_resource");
+        $this->conn->executeQuery("DELETE FROM xi_filelib_folder");
+        $this->conn->executeQuery("/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;");
 
         $this->dataSet = null;
 
@@ -351,12 +343,11 @@ abstract class RelationalDbTestCase extends AbstractBackendAdapterTestCase
 
 
     /**
-     * @return ArrayDataSet
+     * @return array
      */
     private function getSimpleDataSet()
     {
-        return new ArrayDataSet(
-            array(
+        return array(
 
                 'xi_filelib_resource' => array(
                     array(
@@ -530,8 +521,7 @@ abstract class RelationalDbTestCase extends AbstractBackendAdapterTestCase
                         'data' => json_encode(array('versions' => array())),
                     ),
                 ),
-            )
-        );
+            );
     }
 
     /**
@@ -572,17 +562,16 @@ abstract class RelationalDbTestCase extends AbstractBackendAdapterTestCase
      */
     private function setUpDataSet($dataSet)
     {
-        $this->dataSet = $dataSet;
-
-        $this->databaseTester = new \PHPUnit\DbUnit\DefaultTester($this->getConnection());
-        $this->databaseTester->setSetUpOperation($this->getSetUpOperation());
-        $this->databaseTester->setDataSet($this->getDataSet($dataSet));
-        $this->databaseTester->onSetUp();
+        foreach ($this->getDataSet($dataSet) as $table => $rows) {
+            foreach ($rows as $row) {
+                $this->conn->insert($table, $row);
+            }
+        }
     }
 
     /**
-     * @param  string                                              $dataSet
-     * @return PHPUnit_Extensions_Database_DataSet_AbstractDataSet
+     * @param  string $dataSet
+     * @return array
      * @throws Exception
      */
     private function getDataSet($dataSet = null)
@@ -597,71 +586,10 @@ abstract class RelationalDbTestCase extends AbstractBackendAdapterTestCase
     }
 
     /**
-     * @return PHPUnit_Extensions_Database_DataSet_DefaultDataSet
+     * @return array
      */
     private function getEmptyDataSet()
     {
-        return new \PHPUnit\DbUnit\DataSet\DefaultDataSet();
-    }
-
-    /**
-     * @return PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection
-     */
-    private function getConnection()
-    {
-        try {
-            if (PDO_DRIVER === 'sqlite') {
-                $pdo = new PDO(sprintf('sqlite:%s', PDO_DBNAME));
-            } else {
-                $dsn = sprintf('%s:host=%s;dbname=%s', PDO_DRIVER, PDO_HOST, PDO_DBNAME);
-
-                $pdo = new PDO($dsn, PDO_USERNAME, PDO_PASSWORD);
-            }
-        } catch (PDOException $e) {
-            $this->markTestSkipped('Could not connect to database.');
-        }
-
-        return new \PHPUnit\DbUnit\Database\DefaultConnection($pdo);
-    }
-
-    /**
-     * @return PHPUnit_Extensions_Database_Operation_IDatabaseOperation
-     */
-    protected function getSetUpOperation()
-    {
-        if ($this->isMySQL()) {
-            return new \PHPUnit\DbUnit\Operation\Composite(
-                array(
-                    new MySQL55Truncate(true),
-                    \PHPUnit\DbUnit\Operation\Factory::INSERT()
-                )
-            );
-        }
-
-        return \PHPUnit\DbUnit\Operation\Factory::CLEAN_INSERT(true);
-    }
-
-    /**
-     * @return PHPUnit_Extensions_Database_Operation_IDatabaseOperation
-     */
-    protected function getTearDownOperation()
-    {
-        if ($this->isMySQL()) {
-            return new \PHPUnit\DbUnit\Operation\Composite(
-                array(
-                    new MySQL55Truncate(true)
-                )
-            );
-        }
-
-        return \PHPUnit\DbUnit\Operation\Factory::TRUNCATE(true);
-    }
-
-    /**
-     * @return boolean
-     */
-    private function isMySQL()
-    {
-        return $this->getConnection()->getMetaData() instanceof PHPUnit_Extensions_Database_DB_MetaData_MySQL;
+        return array();
     }
 }

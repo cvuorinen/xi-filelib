@@ -14,11 +14,11 @@ class DoctrineDbalBackendAdapterTest extends RelationalDbTestCase
 {
 
     /**
-     * @return DoctrineDbalPlatform
+     * @return DoctrineDbalBackendAdapter
      */
     protected function setUpBackend()
     {
-        $conn = DriverManager::getConnection(
+        $this->conn = DriverManager::getConnection(
             array(
                 'driver' => 'pdo_' . PDO_DRIVER,
                 'dbname' => PDO_DBNAME,
@@ -27,7 +27,7 @@ class DoctrineDbalBackendAdapterTest extends RelationalDbTestCase
                 'host' => PDO_HOST,
             )
         );
-        return new DoctrineDbalBackendAdapter($conn);
+        return new DoctrineDbalBackendAdapter($this->conn);
     }
 
     /**

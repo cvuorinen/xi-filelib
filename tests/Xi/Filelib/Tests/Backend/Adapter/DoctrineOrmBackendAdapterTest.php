@@ -43,8 +43,8 @@ class DoctrineOrmBackendAdapterTest extends RelationalDbTestCase
                 'host' => PDO_HOST,
             );
 
-        $connection = DriverManager::getConnection($connectionOptions, $config);
-        $em = new EntityManager($connection, $config);
+        $this->conn = DriverManager::getConnection($connectionOptions, $config);
+        $em = new EntityManager($this->conn, $config);
 
         return new DoctrineOrmBackendAdapter($em);
     }
