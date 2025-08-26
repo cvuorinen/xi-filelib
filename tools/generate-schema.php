@@ -2,14 +2,10 @@
 
 require __DIR__ . '/../tests/bootstrap.php';
 
+use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Configuration;
-use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use Doctrine\ORM\ORMSetup;
 use Doctrine\ORM\Tools\SchemaTool;
-use Doctrine\Common\Cache\ArrayCache;
-use Doctrine\Common\Annotations\AnnotationRegistry;
-use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\Common\Annotations\CachedReader;
 
 /**
  * @author Mikko Hirvonen <mikko.petteri.hirvonen@gmail.com>
@@ -37,23 +33,17 @@ class SchemaGenerator
      */
     public function generate()
     {
-        AnnotationRegistry::registerFile(
-            __DIR__ . '/../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php'
+        $config = ORMSetup::createAnnotationMetadataConfiguration(
+            [__DIR__ . '/../library/Xi/Filelib/Backend/DoctrineOrm/Entity'],
+            true, // isDevMode
+            false // useSimpleAnnotationReader
         );
 
-        $driver = new AnnotationDriver(
-            new CachedReader(new AnnotationReader(), new ArrayCache()),
-            array(
-                __DIR__ . '/../library/Xi/Filelib/Backend/Adapter/DoctrineOrm/Entity',
-            )
-        );
-
-        $config = new Configuration();
-        $config->setMetadataDriverImpl($driver);
         $config->setProxyDir(ROOT_TESTS . '/data/temp');
         $config->setProxyNamespace('Proxies');
 
-        $em = EntityManager::create($this->connectionOptions, $config);
+        $connection = DriverManager::getConnection($this->connectionOptions, $config);
+        $em = new EntityManager($connection, $config);
 
         $st = new SchemaTool($em);
         $metadata = $st->getCreateSchemaSql($em->getMetadataFactory()->getAllMetadata());

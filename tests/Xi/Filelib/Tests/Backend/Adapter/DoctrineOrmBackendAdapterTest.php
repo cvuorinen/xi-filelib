@@ -2,17 +2,12 @@
 
 namespace Xi\Filelib\Tests\Backend\Adapter;
 
+use Doctrine\DBAL\DriverManager;
 use Xi\Filelib\Backend\Adapter\DoctrineOrmBackendAdapter;
 use Xi\Filelib\Folder\Folder;
 use Xi\Filelib\Resource\Resource;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Configuration;
-use Doctrine\ORM\EntityNotFoundException;
-use Doctrine\Common\Cache\ArrayCache;
-use Doctrine\Common\Annotations\AnnotationRegistry;
-use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\Common\Annotations\CachedReader;
-use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use Doctrine\ORM\ORMSetup;
 use PHPUnit_Framework_MockObject_MockObject;
 
 /**
@@ -27,26 +22,13 @@ class DoctrineOrmBackendAdapterTest extends RelationalDbTestCase
      */
     protected function setUpBackend()
     {
-        $cache = new ArrayCache();
-
-        AnnotationRegistry::registerFile(
-            ROOT_TESTS . '/../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php'
+        $config = ORMSetup::createAnnotationMetadataConfiguration(
+            [ROOT_TESTS . '/../library/Xi/Filelib/Backend/DoctrineOrm/Entity'],
+            true, // isDevMode
+            false // useSimpleAnnotationReader
         );
-
-        $driver = new AnnotationDriver(
-            new CachedReader(new AnnotationReader(), $cache),
-            array(
-                ROOT_TESTS . '/../library/Xi/Filelib/Backend/DoctrineOrm/Entity',
-            )
-        );
-
-        $config = new Configuration();
-        $config->setMetadataCacheImpl($cache);
-        $config->setMetadataDriverImpl($driver);
-        $config->setQueryCacheImpl($cache);
         $config->setProxyDir(ROOT_TESTS . '/data/temp');
         $config->setProxyNamespace('FilelibTest\Proxies');
-        $config->setAutoGenerateProxyClasses(true);
 
         $connectionOptions = PDO_DRIVER === 'sqlite'
             ? array(
@@ -61,7 +43,8 @@ class DoctrineOrmBackendAdapterTest extends RelationalDbTestCase
                 'host' => PDO_HOST,
             );
 
-        $em = EntityManager::create($connectionOptions, $config);
+        $connection = DriverManager::getConnection($connectionOptions, $config);
+        $em = new EntityManager($connection, $config);
 
         return new DoctrineOrmBackendAdapter($em);
     }
@@ -99,7 +82,7 @@ class DoctrineOrmBackendAdapterTest extends RelationalDbTestCase
         $em = $this->createEntityManagerMock();
         $em->expects($this->once())
             ->method('find')
-            ->will($this->throwException(new EntityNotFoundException()));
+            ->will($this->returnValue(null));
 
         $backend = new DoctrineOrmBackendAdapter($em);
 
@@ -124,7 +107,7 @@ class DoctrineOrmBackendAdapterTest extends RelationalDbTestCase
         $em = $this->createEntityManagerMock();
         $em->expects($this->once())
             ->method('find')
-            ->will($this->throwException(new EntityNotFoundException()));
+            ->will($this->returnValue(null));
 
         $backend = new DoctrineOrmBackendAdapter($em);
 

@@ -29,7 +29,7 @@ abstract class BaseEntity
     private $uuid;
 
     /**
-     * @ORM\Column(name="data", type="json_array")
+     * @ORM\Column(name="data", type="json")
      */
     private $data = array();
 

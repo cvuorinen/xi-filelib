@@ -271,7 +271,7 @@ class DoctrineOrmBackendAdapter extends BaseDoctrineBackendAdapter implements Ba
     {
         $self = $this;
 
-        return $this->em->transactional(
+        return $this->em->wrapInTransaction(
             function (EntityManager $em) use ($self, $file, $folder) {
                 $fileEntityName = $self->getFileEntityName();
 
@@ -307,7 +307,7 @@ class DoctrineOrmBackendAdapter extends BaseDoctrineBackendAdapter implements Ba
     {
         return $this->em
             ->getConnection()
-            ->fetchColumn(
+            ->fetchOne(
                 "SELECT COUNT(id) FROM xi_filelib_file WHERE resource_id = ?",
                 array(
                     $resource->getId()

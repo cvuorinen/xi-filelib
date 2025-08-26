@@ -107,9 +107,9 @@ abstract class BaseDoctrineBackendAdapter
         foreach ($bindParams as $param => $value) {
             $stmt->bindValue($param, $value);
         }
-        $stmt->execute();
+        $result = $stmt->executeQuery();
 
-        $ret = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $ret = $result->fetchAllAssociative();
 
         return array_map(
             function ($ret) {

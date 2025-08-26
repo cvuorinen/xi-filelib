@@ -187,7 +187,7 @@ class LifeCycleTest extends TestCase
         $this->filelib->getFileRepository()->update($file2);
         $this->filelib->getBackend()->getIdentityMap()->clear();
 
-        $row = $this->conn->fetchAssoc("SELECT * FROM xi_filelib_resource WHERE id = ?", [$file->getId()]);
+        $row = $this->conn->fetchAllAssociative("SELECT * FROM xi_filelib_resource WHERE id = ?", [$file->getId()]);
 
         $file3 = $this->filelib->getFileRepository()->find($file->getId());
         $resource3 = $file3->getResource();
