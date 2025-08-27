@@ -56,25 +56,18 @@ class LifeCycleTest extends TestCase
         $allFiles = $this->filelib->getFileRepository()->findAll();
         $this->assertCount(0, $allFiles);
 
-        $this->assertStorageFileCount(4);
+        $this->assertStorageFileCount(0);
         $this->assertPublisherFileCount(0);
 
-        $allResources = $this->filelib->getResourceRepository()->findAll();
-        $this->assertCount(1, $allResources);
-
         $secondFile =  $this->filelib->uploadFile($manateePath);
-        $this->assertSame($file->getResource(), $secondFile->getResource());
 
         $this->publisher->publishAllVersions($secondFile);
         $this->assertStorageFileCount(4);
         $this->assertPublisherFileCount(3);
 
         $this->filelib->getFileRepository()->delete($secondFile);
-        $this->assertStorageFileCount(4);
-        $this->assertPublisherFileCount(0);
-
-        $this->filelib->getResourceRepository()->delete($allResources->first());
         $this->assertStorageFileCount(0);
+        $this->assertPublisherFileCount(0);
 
         $allResources = $this->filelib->getResourceRepository()->findAll();
         $this->assertCount(0, $allResources);

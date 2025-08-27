@@ -420,7 +420,7 @@ class FileRepositoryTest extends \Xi\Filelib\Tests\TestCase
 
         $this->assertEquals(File::STATUS_DELETED, $file->getStatus());
         $this->assertFalse($this->filelib->getFileRepository()->find($file->getId()));
-        $this->assertTrue($this->filelib->getStorage()->exists($file->getResource()));
+        $this->assertFalse($this->filelib->getStorage()->exists($file->getResource()));
     }
 
     /**
@@ -438,6 +438,32 @@ class FileRepositoryTest extends \Xi\Filelib\Tests\TestCase
             Events::FILE_AFTER_DELETE
         )->shouldHaveBeenCalled();
         $this->assertFalse($this->filelib->getStorage()->exists($file->getResource()));
+    }
+
+    /**
+     * @test
+     * @group luszo
+     */
+    public function deletesNonExclusiveResourceAfterLastFileDeleted()
+    {
+        $upload = ROOT_TESTS . '/data/self-lussing-manatee.jpg';
+        $folder = $this->filelib->getFolderRepository()->createByUrl('arto/tenhusen/suuruuden/ylistyskansio');
+
+        $file = $this->filelib->getFileRepository()->upload($upload);
+        $file2 = $this->filelib->getFileRepository()->upload($upload, $folder);
+
+        $this->assertEquals($file->getResource(), $file2->getResource());
+        $resource = $file->getResource();
+
+        $this->filelib->getFileRepository()->delete($file);
+
+        $exists = $this->filelib->getStorage()->exists($resource);
+        $this->assertTrue($this->filelib->getStorage()->exists($resource));
+
+        $this->filelib->getFileRepository()->delete($file2);
+        $exists = $this->filelib->getStorage()->exists($resource);
+
+        $this->assertFalse($this->filelib->getStorage()->exists($resource));
     }
 
 }

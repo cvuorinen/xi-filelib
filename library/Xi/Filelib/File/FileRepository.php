@@ -14,6 +14,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Xi\Collections\Collection\ArrayCollection;
 use Xi\Filelib\AbstractRepository;
 use Xi\Filelib\Backend\Finder\FileFinder;
+use Xi\Filelib\Backend\ResourceReferencedException;
 use Xi\Filelib\Event\FileCopyEvent;
 use Xi\Filelib\Event\FileUploadEvent;
 use Xi\Filelib\Event\FolderEvent;
@@ -234,9 +235,10 @@ class FileRepository extends AbstractRepository implements FileRepositoryInterfa
 
         $file->setStatus(File::STATUS_DELETED);
 
-        if ($file->getResource()->isExclusive()) {
+        try {
             $this->resourceRepository->delete($file->getResource());
-        }
+        } catch (ResourceReferencedException $e)
+        {}
 
         $event = new FileEvent($file);
         $this->eventDispatcher->dispatch($event, Events::FILE_AFTER_DELETE);
