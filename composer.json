@@ -20,7 +20,7 @@
     ],
 
     "require": {
-        "php": ">=7.4.0",
+        "php": "^7.4 || ^8.0",
         "symfony/event-dispatcher": "~5.0",
         "ramsey/uuid": "~3.8",
         "cocur/slugify": "~3.1",
