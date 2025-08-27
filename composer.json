@@ -24,7 +24,7 @@
         "symfony/event-dispatcher": "~5.0",
         "ramsey/uuid": "~3.8",
         "cocur/slugify": "~3.1",
-        "pekkis/temporary-file-manager": "~2.0",
+        "pekkis/temporary-file-manager": "2.1.*@dev",
         "pekkis/directory-calculator": "~2.0",
         "pekkis/mime-types": "~2.0",
         "xi/collections": "0.3.*"
@@ -57,6 +57,14 @@
         "zencoder/zencoder-php": "For AWS S3 support",
         "aws/aws-sdk-php": "For AWS S3 support"
     },
+
+    "repositories": [
+        {
+            "type": "vcs",
+            "no-api": true,
+            "url": "https://github.com/cvuorinen/temporary-file-manager"
+        }
+    ],
 
     "autoload": {
         "psr-0": {
